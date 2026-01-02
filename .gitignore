@@ -1,3 +1,31 @@
-# Godot 4+ specific ignores
+# Godot specific
 .godot/
-/android/
+.import/
+.export/
+.export_presets.cfg
+
+# Godot editor files
+*.tmp
+*.log
+
+# Build / export output
+build/
+export/
+*.exe
+*.app
+*.x86_64
+*.pck
+*.zip
+
+# Mono / C#
+.mono/
+*.csproj
+*.sln
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
