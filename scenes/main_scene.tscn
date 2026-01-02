@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://bstit0er0uc8b"]
 
+[ext_resource type="Texture2D" uid="uid://bb328j4udh1n5" path="res://assets/stars.png" id="1_adb74"]
 [ext_resource type="PackedScene" uid="uid://dm1jw10c6jvt1" path="res://scenes/GUI/fps_counter.tscn" id="1_c16ls"]
+[ext_resource type="Script" uid="uid://dgdcyxg5tu4kh" path="res://scripts/stars.gd" id="1_xdqt8"]
 [ext_resource type="FontFile" uid="uid://2xh1s6462lgr" path="res://assets/ari_w9500/ari-w9500-condensed-display.ttf" id="2_c16ls"]
 [ext_resource type="Script" uid="uid://dglk6ribm782h" path="res://scripts/ship/ship.gd" id="2_rt2n2"]
 [ext_resource type="Theme" uid="uid://cdqg5vqnwecyx" path="res://ui_theme.tres" id="3_7nt27"]
@@ -168,6 +170,16 @@ animations = [{
 }]
 
 [node name="Game" type="Node2D" unique_id=1709177522]
+
+[node name="StarsField" type="Sprite2D" parent="." unique_id=1460646485]
+centered = false
+script = ExtResource("1_xdqt8")
+
+[node name="Star" type="Sprite2D" parent="StarsField" unique_id=1913533934]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("1_adb74")
+hframes = 5
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=268396936]
 anchor_mode = 0
@@ -387,6 +399,7 @@ bus = &"SFX"
 
 [node name="SpawnManager" type="Node" parent="." unique_id=27467253]
 script = ExtResource("8_18nlu")
+spawn = true
 asteroid_scene = ExtResource("10_e1cbu")
 
 [node name="AsteroidContainer" type="Node2D" parent="." unique_id=1217039606]

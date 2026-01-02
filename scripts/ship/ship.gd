@@ -36,7 +36,6 @@ var hit_info : HitInfo = HitInfo.new()
 func _ready():
 	GameManager.register_ship(self)
 	position = Vector2(Setup.screen_width / 2, Setup.screen_height / 2)
-	print(position)
 
 func _process(_delta):
 	if StatManager.health <= 0:
