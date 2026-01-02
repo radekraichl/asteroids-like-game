@@ -1,7 +1,7 @@
 extends Node
 
-var DEBUG : bool = true
-var ship : Ship = null
+var DEBUG: bool = true
+var ship: Ship = null
 
 enum GameState {
 	MAIN_MENU,
@@ -9,25 +9,29 @@ enum GameState {
 	PAUSED
 }
 
-var game_state : GameState = GameState.GAME
+var game_state: GameState = GameState.GAME
 
-signal state_changed(new_state : GameState)
+signal state_changed(new_state: GameState)
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
-func register_ship(_ship : Ship):
+func register_ship(_ship: Ship):
 	if ship:
 		ship.ship_destroyed.disconnect(_onship_destroyed)
 
 	ship = _ship
 	ship.ship_destroyed.connect(_onship_destroyed, CONNECT_ONE_SHOT)
-	
-func _process(_delta):
-	# debug reset
-	if Input.is_action_just_pressed("reset_game") && DEBUG:
-		reset_game()
 
+func _unhandled_input(event):
+	if DEBUG and event is InputEventKey and event.pressed and not event.echo:
+		# debug quit
+		if event.keycode == KEY_Q:
+			get_tree().quit()
+		# debug reset scene
+		if event.keycode == KEY_R:
+			reset_game()
+		
 func reset_game():
 	get_tree().reload_current_scene()
 	StatManager.reset_score()

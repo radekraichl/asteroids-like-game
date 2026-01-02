@@ -36,12 +36,6 @@ window/vsync/vsync_mode=0
 
 enabled=PackedStringArray()
 
-[file_customization]
-
-folder_colors={
-"res://scripts/": "orange"
-}
-
 [input]
 
 shoot={

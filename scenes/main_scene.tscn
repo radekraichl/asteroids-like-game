@@ -16,12 +16,10 @@
 [ext_resource type="AudioStream" uid="uid://bg2w4eqs2s1x0" path="res://assets/sfx/pause_menu_open_close.ogg" id="7_to7gp"]
 [ext_resource type="Texture2D" uid="uid://cpj1wx1nvj7ju" path="res://assets/rocket_plumes_small.png" id="8_6wevv"]
 [ext_resource type="Script" uid="uid://ec4ha37blckq" path="res://scripts/managers/spawn_manager.gd" id="8_18nlu"]
-[ext_resource type="Script" uid="uid://om8kwvduykse" path="res://scenes/in_game_settings.gd" id="10_adb74"]
+[ext_resource type="Script" uid="uid://om8kwvduykse" path="res://scripts/GUI/in_game_settings.gd" id="10_adb74"]
 [ext_resource type="PackedScene" uid="uid://clww1ko6j4axm" path="res://scenes/asteroids/asteroid_big.tscn" id="10_e1cbu"]
 [ext_resource type="Texture2D" uid="uid://c041nfpmb8fys" path="res://assets/explosion_ship.png" id="12_01n6w"]
 [ext_resource type="AudioStream" uid="uid://ccq5rq58114g" path="res://assets/sfx/laser_blast.wav" id="13_si52b"]
-[ext_resource type="PackedScene" uid="uid://oc373y1w6x0c" path="res://scenes/asteroids/asteroid_small.tscn" id="16_6u1mn"]
-[ext_resource type="PackedScene" uid="uid://cybodbjhj40ky" path="res://scenes/asteroids/asteroid_middle.tscn" id="17_bcnxi"]
 
 [sub_resource type="GDScript" id="GDScript_rt2n2"]
 script/source = "extends Camera2D
@@ -345,7 +343,7 @@ bus = &"SFX"
 
 [node name="Ship" type="CharacterBody2D" parent="." unique_id=946185912]
 z_index = 500
-position = Vector2(146, 348)
+position = Vector2(480, 270)
 collision_mask = 2
 script = ExtResource("2_rt2n2")
 missile_scene = ExtResource("3_c16ls")
@@ -393,15 +391,6 @@ asteroid_scene = ExtResource("10_e1cbu")
 
 [node name="AsteroidContainer" type="Node2D" parent="." unique_id=1217039606]
 unique_name_in_owner = true
-
-[node name="AsteroidSmall" parent="." unique_id=1214795606 instance=ExtResource("16_6u1mn")]
-position = Vector2(150, 188)
-
-[node name="AsteroidMiddle" parent="." unique_id=1674546312 instance=ExtResource("17_bcnxi")]
-position = Vector2(150, 137)
-
-[node name="AsteroidBig" parent="." unique_id=1245486436 instance=ExtResource("10_e1cbu")]
-position = Vector2(150, 83)
 
 [connection signal="pressed" from="PauseMenu/MenuRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseMenu/MenuRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SettingsButton" to="PauseMenu" method="_on_settings_button_pressed"]

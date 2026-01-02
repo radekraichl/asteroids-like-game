@@ -81,6 +81,7 @@ max_extra_bonus = 20
 contact_damage = 10
 speed_range = Vector2(40, 80)
 rotation_speed_range = Vector2(4, 6)
+metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1255030340]
 z_index = 100
