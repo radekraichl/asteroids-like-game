@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://b0xp21pfkweit"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=1119899898]
+
+[node name="Control" type="Control" parent="." unique_id=1968854068]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1583723371]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.25882354, 0, 0, 0.7058824)

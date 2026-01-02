@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://2qmlto6hvufb"]
+
+[ext_resource type="Script" uid="uid://ldf5hkiyqf3o" path="res://scripts/asteroid/missile_impact.gd" id="1_0nos2"]
+[ext_resource type="Texture2D" uid="uid://djrnmuf5wbs7a" path="res://assets/missile_impact.png" id="1_jb4td"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2swxv"]
+atlas = ExtResource("1_jb4td")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bd00w"]
+atlas = ExtResource("1_jb4td")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flxc2"]
+atlas = ExtResource("1_jb4td")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fre4m"]
+atlas = ExtResource("1_jb4td")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tnlbb"]
+atlas = ExtResource("1_jb4td")
+region = Rect2(32, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mjoe"]
+atlas = ExtResource("1_jb4td")
+region = Rect2(40, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xowpd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2swxv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bd00w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flxc2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fre4m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tnlbb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1mjoe")
+}],
+"loop": false,
+"name": &"impact",
+"speed": 30.0
+}]
+
+[node name="MissileImpact" type="Node2D" unique_id=1764574891]
+script = ExtResource("1_0nos2")
+
+[node name="Impact" type="AnimatedSprite2D" parent="." unique_id=1628722642]
+sprite_frames = SubResource("SpriteFrames_xowpd")
+animation = &"impact"

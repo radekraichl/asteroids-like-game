@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ccpg3qup2jxtb"]
+
+[ext_resource type="Script" uid="uid://dc0wa124ayjnm" path="res://scripts/managers/setup.gd" id="1_krdnw"]
+
+[node name="Setup" type="Node2D" unique_id=826213411]
+script = ExtResource("1_krdnw")

@@ -1,0 +1,104 @@
+[gd_scene format=3 uid="uid://oc373y1w6x0c"]
+
+[ext_resource type="Script" uid="uid://yrk83ntgn1d5" path="res://scripts/asteroid/asteroid.gd" id="1_aw4ng"]
+[ext_resource type="Texture2D" uid="uid://b57i8uv3sntuo" path="res://assets/asteroids_sm.png" id="2_h4d64"]
+[ext_resource type="Texture2D" uid="uid://b15r8wdx88ki2" path="res://assets/explosion_asteroid_sm.png" id="3_4jaws"]
+[ext_resource type="AudioStream" uid="uid://bxv6b7h2df2ot" path="res://assets/sfx/explosion_sm.wav" id="4_h4d64"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7wxb"]
+atlas = ExtResource("3_4jaws")
+region = Rect2(0, 0, 23, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qo6y1"]
+atlas = ExtResource("3_4jaws")
+region = Rect2(23, 0, 23, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kci4s"]
+atlas = ExtResource("3_4jaws")
+region = Rect2(46, 0, 23, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_acpgt"]
+atlas = ExtResource("3_4jaws")
+region = Rect2(69, 0, 23, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eb2jf"]
+atlas = ExtResource("3_4jaws")
+region = Rect2(92, 0, 23, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hi7qw"]
+atlas = ExtResource("3_4jaws")
+region = Rect2(115, 0, 23, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_elblb"]
+atlas = ExtResource("3_4jaws")
+region = Rect2(138, 0, 23, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cec4b"]
+atlas = ExtResource("3_4jaws")
+region = Rect2(161, 0, 23, 23)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1u4ia"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x7wxb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qo6y1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kci4s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_acpgt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eb2jf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hi7qw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_elblb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cec4b")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 15.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8rk7o"]
+radius = 8.0
+
+[node name="AsteroidSmall" type="CharacterBody2D" unique_id=1214795606]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_aw4ng")
+score_on_hit = 150
+max_extra_bonus = 20
+contact_damage = 10
+speed_range = Vector2(40, 80)
+rotation_speed_range = Vector2(4, 6)
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1255030340]
+z_index = 100
+texture = ExtResource("2_h4d64")
+hframes = 4
+
+[node name="Explosion" type="AnimatedSprite2D" parent="." unique_id=1028979817]
+visible = false
+z_index = 200
+sprite_frames = SubResource("SpriteFrames_1u4ia")
+animation = &"explode"
+frame = 7
+frame_progress = 1.0
+
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=224620769]
+texture_filter = 2
+shape = SubResource("CircleShape2D_8rk7o")
+
+[node name="ExplosionSFX" type="AudioStreamPlayer2D" parent="." unique_id=1593878109]
+stream = ExtResource("4_h4d64")
+bus = &"SFX"

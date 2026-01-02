@@ -1,0 +1,146 @@
+extends CharacterBody2D
+class_name Ship
+
+signal ship_destroyed
+
+# sfx
+@export var play_sfx : bool = true
+
+# movement
+@export var max_speed := 300
+var acceleration := 400
+var friction := 100
+var is_thrusting : bool
+var was_thrusting : bool
+var turn_input : float
+
+# rotation
+@export var rotation_accel: float = 14.0
+@export var rotation_decel: float = 14.0
+@export var max_rotation_speed: float = 6.0
+var angular_velocity: float = 0.0
+
+# plumes
+@onready var plumes : AnimatedSprite2D = $Plumes
+
+# explosion
+@onready var explosion : AnimatedSprite2D = $Explosion
+
+# missile
+@export var missile_scene : PackedScene
+@onready var missile_sfx : AudioStreamPlayer2D = $MissileSFX
+var missile_forward_offset : float = 28
+
+var hit_info : HitInfo = HitInfo.new()
+
+func _ready():
+	GameManager.register_ship(self)
+
+func _process(_delta):
+	if StatManager.health <= 0:
+		destroy()
+		
+	turn_input = 0.0
+	if Input.is_action_pressed("ui_left"):
+		turn_input -= 1.0
+	if Input.is_action_pressed("ui_right"):
+		turn_input += 1.0
+		
+	is_thrusting = Input.is_action_pressed("ui_up")
+	
+	if Input.is_action_just_pressed("shoot"):
+		var missile = missile_scene.instantiate()
+		var offset = Vector2.UP.rotated(global_rotation) * missile_forward_offset;
+		missile.global_position = global_position + offset
+		missile.global_rotation = global_rotation
+		get_parent().add_child(missile)
+		
+		if play_sfx:
+			missile_sfx.play()
+
+	if is_thrusting != was_thrusting:
+		if is_thrusting:
+			plumes.play("thrust")
+		else:
+			plumes.play("idle")
+	was_thrusting = is_thrusting
+
+	# Wrap around screen
+	wrap_screen()
+
+func _physics_process(delta):
+	# angular acceleration
+	angular_velocity += turn_input * rotation_accel * delta
+
+	# natural damping
+	if turn_input == 0.0:
+		angular_velocity = move_toward(
+			angular_velocity,
+			0.0,
+			rotation_decel * delta
+		)
+
+	# hard cap
+	angular_velocity = clamp(
+		angular_velocity,
+		-max_rotation_speed,
+		max_rotation_speed
+	)
+
+	# Apply rotation
+	rotation += angular_velocity * delta
+
+	# movement forward based on current rotation
+	var direction := Vector2.ZERO	
+	if is_thrusting:
+		direction = Vector2.UP.rotated(rotation)
+
+	# apply acceleration
+	velocity += direction * acceleration * delta
+
+	# apply friction when not pressing forward
+	if direction == Vector2.ZERO:
+		var friction_delta = friction * delta
+		if velocity.length() < friction_delta:
+			velocity = Vector2.ZERO
+		else:
+			velocity -= velocity.normalized() * friction_delta
+
+	# maximum speed
+	if velocity.length() > max_speed:
+		velocity = velocity.normalized() * max_speed
+
+	move_and_collide(velocity * delta)
+
+func wrap_screen():
+	# Horizontal wrap
+	if position.x < 0:
+		position.x += Setup.screen_width
+	elif position.x > Setup.screen_width:
+		position.x = 0
+	
+	# Vertical wrap
+	if position.y < 0:
+		position.y += Setup.screen_height
+	elif position.y > Setup.screen_height:
+		position.y = 0
+
+func _on_area_2d_body_entered(body):
+	if LayerManager.is_in_layer(body, LayerManager.Layer.ASTEROID):
+		var _damage = (body as Asteroid).contact_damage
+		StatManager.set_health(StatManager.health - _damage)
+		if body.has_method("hit"):
+			hit_info.source = self
+			body.hit(hit_info)
+			
+func destroy():
+	var sprite = $Sprite
+	velocity = Vector2.ZERO
+	rotation = 0
+	sprite.visible = false
+	plumes.visible = false
+	explosion.visible = true
+	explosion.play("explosion")
+	await explosion.animation_finished
+	ship_destroyed.emit()
+	queue_free()

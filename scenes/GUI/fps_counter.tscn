@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://dm1jw10c6jvt1"]
+
+[ext_resource type="Script" uid="uid://4ywabqbcnaxp" path="res://scripts/GUI/fps_label.gd" id="1_u321x"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2c62f"]
+line_spacing = 0.0
+font_color = Color(0.8862745, 0.32156864, 0.16470589, 1)
+
+[node name="FPSCounter" type="CanvasLayer" unique_id=819093561]
+follow_viewport_scale = 0.001
+
+[node name="FPSLabel" type="Label" parent="." unique_id=298750460]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -78.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "FPS"
+label_settings = SubResource("LabelSettings_2c62f")
+autowrap_trim_flags = 0
+justification_flags = 0
+script = ExtResource("1_u321x")
