@@ -15,6 +15,10 @@ run/main_scene="uid://bstit0er0uc8b"
 config/features=PackedStringArray("4.6", "Forward Plus")
 run/max_fps=200
 
+[audio]
+
+buses/default_bus_layout=""
+
 [autoload]
 
 Setup="*uid://ccpg3qup2jxtb"
@@ -36,6 +40,12 @@ window/vsync/vsync_mode=0
 [editor_plugins]
 
 enabled=PackedStringArray()
+
+[file_customization]
+
+folder_colors={
+"res://scenes/": "blue"
+}
 
 [input]
 

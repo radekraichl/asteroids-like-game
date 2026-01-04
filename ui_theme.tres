@@ -2,8 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://2xh1s6462lgr" path="res://assets/ari_w9500/ari-w9500-condensed-display.ttf" id="1_touxu"]
 [ext_resource type="Texture2D" uid="uid://8p8xohuq178k" path="res://assets/menu_bg.png" id="2_2pn01"]
-[ext_resource type="StyleBox" uid="uid://d1nb55k87dbeb" path="res://button_hover.tres" id="2_mk0s6"]
-[ext_resource type="FontFile" uid="uid://cg8roop8l5qf8" path="res://assets/ari_w9500/ari-w9500-bold.ttf" id="2_tbeor"]
+[ext_resource type="FontFile" uid="uid://dxb4oioc3ggja" path="res://assets/ari_w9500/ari-w9500-display.ttf" id="3_mk0s6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbeor"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -60,6 +59,19 @@ corner_detail = 16
 expand_margin_left = 6.0
 expand_margin_right = 6.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tpf0h"]
+bg_color = Color(0.16862746, 0.19215687, 0.2784314, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 16
+expand_margin_left = 8.0
+expand_margin_top = 2.0
+expand_margin_right = 8.0
+expand_margin_bottom = 2.0
+anti_aliasing = false
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5kxjo"]
 bg_color = Color(0.21568628, 0.25882354, 0.32156864, 1)
 corner_radius_top_left = 4
@@ -73,8 +85,14 @@ expand_margin_right = 8.0
 expand_margin_bottom = 2.0
 anti_aliasing = false
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5y56j"]
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g7fvb"]
+content_margin_bottom = 8.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mk0s6"]
-content_margin_bottom = 12.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tbeor"]
 texture = ExtResource("2_2pn01")
@@ -101,17 +119,29 @@ CheckButton/colors/button_checked_color = Color(1, 1, 0.8784314, 1)
 CheckButton/colors/font_color = Color(1, 1, 0.8784314, 1)
 CheckButton/colors/font_hover_color = Color(1, 1, 0.8784314, 1)
 CheckButton/colors/font_hover_pressed_color = Color(1, 1, 0.8784314, 1)
-CheckButton/styles/hover = ExtResource("2_mk0s6")
-CheckButton/styles/hover_pressed = ExtResource("2_mk0s6")
+CheckButton/styles/hover = SubResource("StyleBoxFlat_tpf0h")
+CheckButton/styles/hover_pressed = SubResource("StyleBoxFlat_tpf0h")
 CheckButton/styles/pressed = SubResource("StyleBoxFlat_5kxjo")
-Label/colors/font_color = Color(0.7294118, 0.2901961, 0.32941177, 1)
-Label/colors/font_outline_color = Color(0, 0, 0, 1)
-Label/colors/font_shadow_color = Color(0.36862746, 0.14117648, 0.16078432, 1)
+HeaderLarge/colors/font_color = Color(0.7294118, 0.2901961, 0.32941177, 1)
+HeaderLarge/colors/font_shadow_color = Color(0.36862746, 0.14117648, 0.16078432, 1)
+HeaderLarge/constants/shadow_offset_x = 2
+HeaderLarge/constants/shadow_offset_y = 2
+HeaderLarge/constants/shadow_outline_size = 2
+HeaderLarge/font_sizes/font_size = 33
+HeaderLarge/styles/normal = SubResource("StyleBoxEmpty_5y56j")
+HeaderMedium/colors/font_color = Color(0.7294118, 0.2901961, 0.32941177, 1)
+HeaderMedium/colors/font_shadow_color = Color(0.36862746, 0.14117648, 0.16078432, 1)
+HeaderMedium/constants/shadow_offset_x = 1
+HeaderMedium/constants/shadow_offset_y = 1
+HeaderMedium/constants/shadow_outline_size = 0
+HeaderMedium/font_sizes/font_size = 22
+HeaderMedium/styles/normal = SubResource("StyleBoxFlat_g7fvb")
+Label/colors/font_color = Color(1, 1, 0.8784314, 1)
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
 Label/constants/shadow_outline_size = 0
-Label/font_sizes/font_size = 24
-Label/fonts/font = ExtResource("2_tbeor")
+Label/font_sizes/font_size = 11
+Label/fonts/font = ExtResource("3_mk0s6")
 Label/styles/normal = SubResource("StyleBoxEmpty_mk0s6")
 MarginContainer/constants/margin_bottom = 20
 MarginContainer/constants/margin_left = 20

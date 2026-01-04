@@ -113,6 +113,14 @@ func _physics_process(delta):
 
 	move_and_collide(velocity * delta)
 
+func _on_area_2d_body_entered(body):
+	if LayerManager.is_in_layer(body, LayerManager.Layer.ASTEROID):
+		var _damage = (body as Asteroid).contact_damage
+		StatManager.set_health(StatManager.health - _damage)
+		if body.has_method("hit"):
+			hit_info.source = self
+			body.hit(hit_info)
+
 func wrap_screen():
 	# Horizontal wrap
 	if position.x < 0:
@@ -126,14 +134,6 @@ func wrap_screen():
 	elif position.y > Setup.screen_height:
 		position.y = 0
 
-func _on_area_2d_body_entered(body):
-	if LayerManager.is_in_layer(body, LayerManager.Layer.ASTEROID):
-		var _damage = (body as Asteroid).contact_damage
-		StatManager.set_health(StatManager.health - _damage)
-		if body.has_method("hit"):
-			hit_info.source = self
-			body.hit(hit_info)
-			
 func destroy():
 	var sprite = $Sprite
 	velocity = Vector2.ZERO
@@ -142,6 +142,6 @@ func destroy():
 	plumes.visible = false
 	explosion.visible = true
 	explosion.play("explosion")
-	await explosion.animation_finished
 	ship_destroyed.emit()
+	await explosion.animation_finished
 	queue_free()

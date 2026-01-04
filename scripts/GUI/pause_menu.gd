@@ -18,6 +18,7 @@ var last_focused : Control
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	pass
 
 func set_screen(screen : Screen):
 	current_screen = screen
@@ -50,6 +51,8 @@ func _unhandled_input(event):
 		focus_sound.play()
 
 	if not event.is_action_pressed("ui_cancel"):
+		return
+	if GameManager.game_state == GameManager.GameState.GAME_OVER:
 		return
 
 	match current_screen:

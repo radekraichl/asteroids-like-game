@@ -1,5 +1,8 @@
 extends Sprite2D
+
 @onready var _star: Sprite2D = %Star
+
+@export var star_count: int = 100
 
 func _ready():
 	centered = false
@@ -12,18 +15,16 @@ func _ready():
 	
 	var star_image = _star.texture.get_image()
 	
-	# Barvy hvězd (realistické spektrální třídy)
 	var star_colors = [
-		Color(1.0, 1.0, 1.0),      # Bílá
-		Color(1.0, 0.9, 0.8),      # Běložlutá
-		Color(1.0, 1.0, 0.6),      # Žlutá
-		Color(1.0, 0.7, 0.4),      # Oranžová
-		Color(1.0, 0.4, 0.3),      # Červená
-		Color(0.7, 0.8, 1.0),      # Modrobílá
-		Color(0.6, 0.7, 1.0),      # Modrá
+		Color(1.0, 1.0, 1.0),
+		Color(1.0, 0.9, 0.8),
+		Color(1.0, 1.0, 0.6),
+		Color(1.0, 0.7, 0.4),
+		Color(1.0, 0.4, 0.3),
+		Color(0.7, 0.8, 1.0),
+		Color(0.6, 0.7, 1.0),
 	]
 	
-	var star_count = 100
 	for i in range(star_count):
 		var random_frame = randi() % _star.hframes
 		var src_x = random_frame * frame_size.x
@@ -39,10 +40,9 @@ func _ready():
 			Rect2i(src_x, src_y, frame_size.x, frame_size.y),
 			Vector2i(0, 0))
 		
-		# Náhodná barva
+		# random color
 		var star_color = star_colors[randi() % star_colors.size()]
 		
-		# Aplikuj barvu na všechny pixely
 		for x in range(int(frame_size.x)):
 			for y in range(int(frame_size.y)):
 				var pixel = temp_image.get_pixel(x, y)
@@ -52,7 +52,7 @@ func _ready():
 					pixel.b *= star_color.b
 					temp_image.set_pixel(x, y, pixel)
 		
-		# Náhodná intenzita
+		# random intensity
 		var random_intensity = randf_range(0.1, 0.8)
 		temp_image.adjust_bcs(random_intensity, 1.0, 1.0)
 		
