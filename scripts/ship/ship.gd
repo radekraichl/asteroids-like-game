@@ -1,5 +1,5 @@
-extends CharacterBody2D
 class_name Ship
+extends CharacterBody2D
 
 signal ship_destroyed
 

@@ -2,7 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://bb328j4udh1n5" path="res://assets/stars.png" id="1_adb74"]
 [ext_resource type="PackedScene" uid="uid://dm1jw10c6jvt1" path="res://scenes/GUI/fps_counter.tscn" id="1_c16ls"]
-[ext_resource type="Script" uid="uid://dgdcyxg5tu4kh" path="res://scripts/stars.gd" id="1_xdqt8"]
+[ext_resource type="Script" uid="uid://c06fx4od62njj" path="res://scripts/starfield_generator.gd" id="1_to7gp"]
+[ext_resource type="Script" uid="uid://veeu7hiraxc1" path="res://scripts/background.gd" id="1_u0fll"]
 [ext_resource type="FontFile" uid="uid://2xh1s6462lgr" path="res://assets/ari_w9500/ari-w9500-condensed-display.ttf" id="2_c16ls"]
 [ext_resource type="Script" uid="uid://dglk6ribm782h" path="res://scripts/ship/ship.gd" id="2_rt2n2"]
 [ext_resource type="Theme" uid="uid://cdqg5vqnwecyx" path="res://ui_theme.tres" id="3_7nt27"]
@@ -22,7 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://clww1ko6j4axm" path="res://scenes/asteroids/asteroid_big.tscn" id="10_e1cbu"]
 [ext_resource type="Texture2D" uid="uid://c041nfpmb8fys" path="res://assets/explosion_ship.png" id="12_01n6w"]
 [ext_resource type="AudioStream" uid="uid://ccq5rq58114g" path="res://assets/sfx/laser_blast.wav" id="13_si52b"]
-[ext_resource type="Script" uid="uid://va2o05eat8pu" path="res://scenes/game_over.gd" id="15_58gk3"]
+[ext_resource type="Script" uid="uid://va2o05eat8pu" path="res://scripts/GUI/game_over.gd" id="15_58gk3"]
 
 [sub_resource type="GDScript" id="GDScript_rt2n2"]
 script/source = "extends Camera2D
@@ -172,12 +173,47 @@ animations = [{
 
 [node name="Game" type="Node2D" unique_id=1709177522]
 
-[node name="StarsField" type="Sprite2D" parent="." unique_id=1460646485]
-centered = false
-script = ExtResource("1_xdqt8")
+[node name="Background" type="Node2D" parent="." unique_id=558508590]
+script = ExtResource("1_u0fll")
 
-[node name="Star" type="Sprite2D" parent="StarsField" unique_id=1913533934]
-unique_name_in_owner = true
+[node name="Parallax2DFar" type="Parallax2D" parent="Background" unique_id=136117735]
+repeat_size = Vector2(960, 540)
+follow_viewport = false
+
+[node name="StarsField" type="Sprite2D" parent="Background/Parallax2DFar" unique_id=1738412992]
+centered = false
+script = ExtResource("1_to7gp")
+star_count = 100
+
+[node name="Star" type="Sprite2D" parent="Background/Parallax2DFar/StarsField" unique_id=885096901]
+visible = false
+texture = ExtResource("1_adb74")
+hframes = 5
+
+[node name="Parallax2DMid" type="Parallax2D" parent="Background" unique_id=1885565195]
+repeat_size = Vector2(960, 540)
+follow_viewport = false
+
+[node name="StarsField" type="Sprite2D" parent="Background/Parallax2DMid" unique_id=323070727]
+centered = false
+script = ExtResource("1_to7gp")
+star_count = 60
+
+[node name="Star" type="Sprite2D" parent="Background/Parallax2DMid/StarsField" unique_id=747727532]
+visible = false
+texture = ExtResource("1_adb74")
+hframes = 5
+
+[node name="Parallax2DNear" type="Parallax2D" parent="Background" unique_id=1401273145]
+repeat_size = Vector2(960, 540)
+follow_viewport = false
+
+[node name="StarField" type="Sprite2D" parent="Background/Parallax2DNear" unique_id=1460646485]
+centered = false
+script = ExtResource("1_to7gp")
+star_count = 40
+
+[node name="Star" type="Sprite2D" parent="Background/Parallax2DNear/StarField" unique_id=1913533934]
 visible = false
 texture = ExtResource("1_adb74")
 hframes = 5
@@ -188,7 +224,6 @@ script = SubResource("GDScript_rt2n2")
 
 [node name="FPSCounter" parent="." unique_id=819093561 instance=ExtResource("1_c16ls")]
 layer = 0
-visible = false
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1668814919]
 unique_name_in_owner = true
@@ -404,6 +439,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Ship" type="CharacterBody2D" parent="." unique_id=946185912]
+unique_name_in_owner = true
 z_index = 500
 position = Vector2(480, 382)
 collision_mask = 2
@@ -454,18 +490,6 @@ asteroid_scene = ExtResource("10_e1cbu")
 
 [node name="AsteroidContainer" type="Node2D" parent="." unique_id=1217039606]
 unique_name_in_owner = true
-
-[node name="Node2D" type="Node2D" parent="." unique_id=2011532392]
-position = Vector2(479, 191)
-
-[node name="AsteroidBig" parent="Node2D" unique_id=1214795606 instance=ExtResource("10_e1cbu")]
-position = Vector2(1, -13)
-
-[node name="AsteroidBig2" parent="Node2D" unique_id=1384381172 instance=ExtResource("10_e1cbu")]
-position = Vector2(1, -67)
-
-[node name="AsteroidBig3" parent="Node2D" unique_id=1040674088 instance=ExtResource("10_e1cbu")]
-position = Vector2(-1, -133)
 
 [connection signal="pressed" from="PauseMenu/MenuRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseMenu/MenuRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SettingsButton" to="PauseMenu" method="_on_settings_button_pressed"]

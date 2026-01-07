@@ -4,12 +4,17 @@ const SETTINGS_FILE_PATH: String = "user://settings.cfg"
 
 var sfx_index = AudioServer.get_bus_index("SFX")
 
-var sfx_enabled: bool = true:
+var _sfx_enabled := true
+var sfx_enabled: bool:
+	get:
+		return _sfx_enabled
 	set(value):
-		sfx_enabled = value
-		AudioServer.set_bus_mute(sfx_index, !sfx_enabled)
+		_sfx_enabled = value
+		if sfx_index != -1:
+			AudioServer.set_bus_mute(sfx_index, !_sfx_enabled)
 
 func _ready():
+	print(sfx_index)
 	load_config()
 
 func load_config():
