@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://bb328j4udh1n5" path="res://assets/stars.png" id="1_adb74"]
 [ext_resource type="PackedScene" uid="uid://dm1jw10c6jvt1" path="res://scenes/GUI/fps_counter.tscn" id="1_c16ls"]
-[ext_resource type="Script" uid="uid://c06fx4od62njj" path="res://scripts/starfield_generator.gd" id="1_to7gp"]
-[ext_resource type="Script" uid="uid://veeu7hiraxc1" path="res://scripts/background.gd" id="1_u0fll"]
+[ext_resource type="Script" uid="uid://c06fx4od62njj" path="res://scripts/background/starfield_generator.gd" id="1_to7gp"]
+[ext_resource type="Script" uid="uid://veeu7hiraxc1" path="res://scripts/background/background.gd" id="1_u0fll"]
 [ext_resource type="FontFile" uid="uid://2xh1s6462lgr" path="res://assets/ari_w9500/ari-w9500-condensed-display.ttf" id="2_c16ls"]
 [ext_resource type="Script" uid="uid://dglk6ribm782h" path="res://scripts/ship/ship.gd" id="2_rt2n2"]
 [ext_resource type="Theme" uid="uid://cdqg5vqnwecyx" path="res://ui_theme.tres" id="3_7nt27"]
@@ -24,6 +24,9 @@
 [ext_resource type="Texture2D" uid="uid://c041nfpmb8fys" path="res://assets/explosion_ship.png" id="12_01n6w"]
 [ext_resource type="AudioStream" uid="uid://ccq5rq58114g" path="res://assets/sfx/laser_blast.wav" id="13_si52b"]
 [ext_resource type="Script" uid="uid://va2o05eat8pu" path="res://scripts/GUI/game_over.gd" id="15_58gk3"]
+[ext_resource type="Texture2D" uid="uid://dwtib53yfu1wp" path="res://assets/ship.png" id="19_6p3nn"]
+[ext_resource type="Texture2D" uid="uid://c4xwd4c0xb7kc" path="res://assets/ufo.png" id="25_u0fll"]
+[ext_resource type="Script" uid="uid://ba340ffws2uo2" path="res://scripts/ufo.gd" id="26_k67gn"]
 
 [sub_resource type="GDScript" id="GDScript_rt2n2"]
 script/source = "extends Camera2D
@@ -34,9 +37,6 @@ paragraph_spacing = 3.0
 font = ExtResource("2_c16ls")
 font_size = 22
 font_color = Color(0.99607843, 0.9529412, 0.7529412, 0.7058824)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pu3yx"]
-load_path = "res://.godot/imported/rocket.png-ee7caa6d60b8c73f0b17d79a887f39b7.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r6p65"]
 atlas = ExtResource("8_6wevv")
@@ -224,6 +224,7 @@ script = SubResource("GDScript_rt2n2")
 
 [node name="FPSCounter" parent="." unique_id=819093561 instance=ExtResource("1_c16ls")]
 layer = 0
+visible = false
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1668814919]
 unique_name_in_owner = true
@@ -456,9 +457,7 @@ position = Vector2(0, 1)
 polygon = PackedVector2Array(0, -23, 16, 9, -16, 9, -7.4013977, -8.197205)
 
 [node name="Sprite" type="Sprite2D" parent="Ship" unique_id=138527113]
-texture_filter = 2
-texture_repeat = 1
-texture = SubResource("CompressedTexture2D_pu3yx")
+texture = ExtResource("19_6p3nn")
 offset = Vector2(0, -6)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ship" unique_id=387866298]
@@ -485,11 +484,18 @@ bus = &"SFX"
 
 [node name="SpawnManager" type="Node" parent="." unique_id=27467253]
 script = ExtResource("8_18nlu")
-spawn = true
 asteroid_scene = ExtResource("10_e1cbu")
 
 [node name="AsteroidContainer" type="Node2D" parent="." unique_id=1217039606]
 unique_name_in_owner = true
+
+[node name="UFO" type="Node2D" parent="." unique_id=1210863907]
+position = Vector2(219, 125)
+script = ExtResource("26_k67gn")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="UFO" unique_id=1699140515]
+texture = ExtResource("25_u0fll")
 
 [connection signal="pressed" from="PauseMenu/MenuRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseMenu/MenuRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SettingsButton" to="PauseMenu" method="_on_settings_button_pressed"]

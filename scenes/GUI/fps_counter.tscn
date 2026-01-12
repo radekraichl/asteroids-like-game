@@ -4,7 +4,7 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_2c62f"]
 line_spacing = 0.0
-font_color = Color(0.8862745, 0.32156864, 0.16470589, 1)
+font_color = Color(0.11069999, 0.120676644, 0.41, 1)
 
 [node name="FPSCounter" type="CanvasLayer" unique_id=819093561]
 follow_viewport_scale = 0.001
@@ -15,7 +15,7 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -78.0
+offset_left = -70.0
 offset_top = -23.0
 grow_horizontal = 0
 grow_vertical = 0

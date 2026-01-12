@@ -14,7 +14,6 @@ var sfx_enabled: bool:
 			AudioServer.set_bus_mute(sfx_index, !_sfx_enabled)
 
 func _ready():
-	print(sfx_index)
 	load_config()
 
 func load_config():

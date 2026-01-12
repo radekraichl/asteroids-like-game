@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wngia65q6k0s"
-path="res://.godot/imported/stars.png-6162f849db836b3c41bae974ad6857ba.ctex"
+uid="uid://c4xwd4c0xb7kc"
+path="res://.godot/imported/ufo.png-19ee9dd25674d5d141d21b27f60ec24d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/aseprite/stars.png"
-dest_files=["res://.godot/imported/stars.png-6162f849db836b3c41bae974ad6857ba.ctex"]
+source_file="res://assets/ufo.png"
+dest_files=["res://.godot/imported/ufo.png-19ee9dd25674d5d141d21b27f60ec24d.ctex"]
 
 [params]
 
