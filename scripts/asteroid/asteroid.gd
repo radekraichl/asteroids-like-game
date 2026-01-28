@@ -16,13 +16,14 @@ class_name Asteroid
 @onready var explosion : AnimatedSprite2D = $Explosion
 @onready var explosion_sfx : AudioStreamPlayer2D = $ExplosionSFX
 
-var asteroid_container : Node2D
-var movement_direction : Vector2
 var speed : float
+var movement_direction : Vector2
 var rotation_speed : float
 var dir_multiplier : int
+var destroy_extra_bonus : int
+
+var asteroid_container : Node2D
 var has_entered_screen : bool
-var extra_bonus : int
 
 var missile_impact: PackedScene = preload("res://scenes/asteroids/missile_impact.tscn")
 func _ready():
@@ -30,7 +31,7 @@ func _ready():
 		asteroid_container = %AsteroidContainer
 		
 	# pick an extra bonus
-	extra_bonus = randi_range(0, max_extra_bonus)
+	destroy_extra_bonus = randi_range(0, max_extra_bonus)
 	# pick a random sprite
 	var total_frames = sprite.hframes * sprite.vframes
 	sprite.frame = randi() % total_frames
@@ -57,7 +58,7 @@ func hit(hit_info : HitInfo):
 		destroy_asteroid()
 		return
 
-	StatManager.add_points(score_on_hit + extra_bonus)
+	StatManager.add_points(score_on_hit + destroy_extra_bonus)
 	
 	# impact
 	var impact := missile_impact.instantiate()
