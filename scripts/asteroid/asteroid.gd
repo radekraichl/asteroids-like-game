@@ -26,6 +26,7 @@ var asteroid_container : Node2D
 var has_entered_screen : bool
 
 var missile_impact: PackedScene = preload("res://scenes/asteroids/missile_impact.tscn")
+
 func _ready():
 	if asteroid_container == null:
 		asteroid_container = %AsteroidContainer

@@ -27,7 +27,6 @@ StatManager="*uid://bs4knau0k5p1t"
 
 window/size/viewport_width=960
 window/size/viewport_height=540
-window/size/mode=3
 window/stretch/mode="canvas_items"
 window/dpi/allow_hidpi=false
 window/vsync/vsync_mode=0
@@ -53,7 +52,8 @@ reset_game={
 
 2d_physics/layer_1="player"
 2d_physics/layer_2="asteroid"
-2d_physics/layer_3="projectile"
+2d_physics/layer_3="missile"
+2d_physics/layer_4="ufo"
 
 [physics]
 

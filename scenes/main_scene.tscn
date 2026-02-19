@@ -7,7 +7,7 @@
 [ext_resource type="FontFile" uid="uid://2xh1s6462lgr" path="res://assets/ari_w9500/ari-w9500-condensed-display.ttf" id="2_c16ls"]
 [ext_resource type="Script" uid="uid://dglk6ribm782h" path="res://scripts/ship/ship.gd" id="2_rt2n2"]
 [ext_resource type="Theme" uid="uid://cdqg5vqnwecyx" path="res://ui_theme.tres" id="3_7nt27"]
-[ext_resource type="PackedScene" uid="uid://cp8f44ulakgww" path="res://scenes/missile.tscn" id="3_c16ls"]
+[ext_resource type="PackedScene" uid="uid://cp8f44ulakgww" path="res://scenes/ship_missile.tscn" id="3_c16ls"]
 [ext_resource type="Script" uid="uid://td5o3in76l7v" path="res://scripts/GUI/pause_menu.gd" id="4_xdqt8"]
 [ext_resource type="Texture2D" uid="uid://dgxvxu8iiohx8" path="res://assets/health_bar_bg.png" id="5_4w45t"]
 [ext_resource type="Texture2D" uid="uid://bjltt50f68alq" path="res://assets/health_bar.png" id="5_e1cbu"]
@@ -25,6 +25,7 @@
 [ext_resource type="AudioStream" uid="uid://ccq5rq58114g" path="res://assets/sfx/laser_blast.wav" id="13_si52b"]
 [ext_resource type="Script" uid="uid://va2o05eat8pu" path="res://scripts/GUI/game_over.gd" id="15_58gk3"]
 [ext_resource type="Texture2D" uid="uid://dwtib53yfu1wp" path="res://assets/ship.png" id="19_6p3nn"]
+[ext_resource type="PackedScene" uid="uid://2c5rea2hxnj8" path="res://scenes/wrap.tscn" id="24_k3g67"]
 [ext_resource type="Texture2D" uid="uid://c4xwd4c0xb7kc" path="res://assets/ufo.png" id="25_u0fll"]
 [ext_resource type="Script" uid="uid://ba340ffws2uo2" path="res://scripts/ufo.gd" id="26_k67gn"]
 
@@ -171,6 +172,13 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k3g67"]
+radius = 7.0
+height = 41.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4bgka"]
+radius = 9.0
+
 [node name="Game" type="Node2D" unique_id=1709177522]
 
 [node name="Background" type="Node2D" parent="." unique_id=558508590]
@@ -224,7 +232,6 @@ script = SubResource("GDScript_rt2n2")
 
 [node name="FPSCounter" parent="." unique_id=819093561 instance=ExtResource("1_c16ls")]
 layer = 0
-visible = false
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1668814919]
 unique_name_in_owner = true
@@ -448,7 +455,15 @@ script = ExtResource("2_rt2n2")
 missile_scene = ExtResource("3_c16ls")
 metadata/_edit_group_ = true
 
+[node name="Wrap" parent="Ship" unique_id=1397656902 instance=ExtResource("24_k3g67")]
+wrap_margin = 8.0
+
+[node name="Sprite" type="Sprite2D" parent="Ship" unique_id=138527113]
+texture = ExtResource("19_6p3nn")
+offset = Vector2(0, -6)
+
 [node name="Area2D" type="Area2D" parent="Ship" unique_id=610386734]
+visible = false
 collision_mask = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ship/Area2D" unique_id=419081471]
@@ -456,14 +471,10 @@ visible = false
 position = Vector2(0, 1)
 polygon = PackedVector2Array(0, -23, 16, 9, -16, 9, -7.4013977, -8.197205)
 
-[node name="Sprite" type="Sprite2D" parent="Ship" unique_id=138527113]
-texture = ExtResource("19_6p3nn")
-offset = Vector2(0, -6)
-
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ship" unique_id=387866298]
 visible = false
 position = Vector2(0, 1)
-polygon = PackedVector2Array(0, -18, 12, 6, -12, 6)
+polygon = PackedVector2Array(0, -23, 16, 9, -16, 9)
 
 [node name="Plumes" type="AnimatedSprite2D" parent="Ship" unique_id=975348223]
 position = Vector2(0, 13)
@@ -489,13 +500,28 @@ asteroid_scene = ExtResource("10_e1cbu")
 [node name="AsteroidContainer" type="Node2D" parent="." unique_id=1217039606]
 unique_name_in_owner = true
 
-[node name="UFO" type="Node2D" parent="." unique_id=1210863907]
-position = Vector2(219, 125)
+[node name="UFO" type="CharacterBody2D" parent="." unique_id=789996662]
+position = Vector2(474, 136)
+collision_layer = 8
+collision_mask = 4
 script = ExtResource("26_k67gn")
+can_move = false
+turn_speed = 8.0
 metadata/_edit_group_ = true
+
+[node name="Wrap" parent="UFO" unique_id=422349687 instance=ExtResource("24_k3g67")]
 
 [node name="Sprite2D" type="Sprite2D" parent="UFO" unique_id=1699140515]
 texture = ExtResource("25_u0fll")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UFO" unique_id=921241839]
+position = Vector2(0, 2)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_k3g67")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="UFO" unique_id=1112972624]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_4bgka")
 
 [connection signal="pressed" from="PauseMenu/MenuRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseMenu/MenuRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SettingsButton" to="PauseMenu" method="_on_settings_button_pressed"]

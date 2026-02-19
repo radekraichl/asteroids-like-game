@@ -4,7 +4,7 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_2c62f"]
 line_spacing = 0.0
-font_color = Color(0.11069999, 0.120676644, 0.41, 1)
+font_color = Color(0.83, 0.7896067, 0.22409998, 1)
 
 [node name="FPSCounter" type="CanvasLayer" unique_id=819093561]
 follow_viewport_scale = 0.001

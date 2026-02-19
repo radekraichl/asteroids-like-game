@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name ship_missile
+
 @export var speed : float = 600.0
 
 var hit_info : HitInfo = HitInfo.new()

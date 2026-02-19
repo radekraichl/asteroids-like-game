@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://2c5rea2hxnj8"]
+
+[ext_resource type="Script" uid="uid://lvrskocj52e4" path="res://scripts/wrap.gd" id="1_kh7y3"]
+
+[node name="Wrap" type="Node" unique_id=1397656902]
+script = ExtResource("1_kh7y3")

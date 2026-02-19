@@ -66,9 +66,6 @@ func _process(_delta):
 			plumes.play("idle")
 	was_thrusting = is_thrusting
 
-	# Wrap around screen
-	wrap_screen()
-
 func _physics_process(delta):
 	# angular acceleration
 	angular_velocity += turn_input * rotation_accel * delta
@@ -120,19 +117,6 @@ func _on_area_2d_body_entered(body):
 		if body.has_method("hit"):
 			hit_info.source = self
 			body.hit(hit_info)
-
-func wrap_screen():
-	# Horizontal wrap
-	if position.x < 0:
-		position.x += Setup.screen_width
-	elif position.x > Setup.screen_width:
-		position.x = 0
-	
-	# Vertical wrap
-	if position.y < 0:
-		position.y += Setup.screen_height
-	elif position.y > Setup.screen_height:
-		position.y = 0
 
 func destroy():
 	var sprite = $Sprite
