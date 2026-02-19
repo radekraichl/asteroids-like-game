@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var can_move: bool = true
 @export var speed_range: Vector2 = Vector2(90.0, 130.0)
 @export var turn_speed: float = 10.0
+@export var impact_color: Color = Color("ffe140")
 
 var direction: Vector2 = Vector2.RIGHT
 var speed: float
@@ -10,6 +11,7 @@ var target_direction: Vector2 = Vector2.RIGHT
 var target_speed: float
 
 var timer: Timer
+var missile_impact: PackedScene = preload("res://scenes/missile_impact.tscn")
 
 func _ready() -> void:
 	speed = speed_range.x
@@ -39,4 +41,10 @@ func _on_ufo_tick() -> void:
 	target_direction = direction.rotated(deg_to_rad(random_angle))
 	target_speed = randf_range(speed_range.x, speed_range.y)
 	_start_timer()
-	
+
+func hit(hit_info: HitInfo) -> void:
+	# impact
+	var impact := missile_impact.instantiate()
+	impact.color = impact_color
+	impact.position = to_local(hit_info.position)
+	add_child(impact)
