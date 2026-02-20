@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://ieyqnnvsdhg6"]
+
+[ext_resource type="Script" uid="uid://ba340ffws2uo2" path="res://scripts/ufo/ufo.gd" id="1_gp6nc"]
+[ext_resource type="PackedScene" uid="uid://2c5rea2hxnj8" path="res://scenes/wrap.tscn" id="2_1aa4c"]
+[ext_resource type="Texture2D" uid="uid://c4xwd4c0xb7kc" path="res://assets/ufo.png" id="3_vvsiw"]
+[ext_resource type="Script" uid="uid://bovhliyr7f8m7" path="res://scripts/health.gd" id="4_1aa4c"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k3g67"]
+radius = 7.0
+height = 41.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4bgka"]
+radius = 9.0
+
+[node name="UFO" type="CharacterBody2D" unique_id=1375694361]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_gp6nc")
+turn_speed = 8.0
+metadata/_edit_group_ = true
+
+[node name="Wrap" parent="." unique_id=1397656902 instance=ExtResource("2_1aa4c")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=131832471]
+texture = ExtResource("3_vvsiw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1606977033]
+position = Vector2(0, 2)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_k3g67")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=180798667]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_4bgka")
+
+[node name="Health" type="Node" parent="." unique_id=1263447560]
+script = ExtResource("4_1aa4c")
