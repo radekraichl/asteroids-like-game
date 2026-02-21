@@ -1,10 +1,15 @@
+class_name Projectile
 extends CharacterBody2D
 
-class_name ship_missile
+@export var speed: float = 500.0
+@export var color: Color = Color("ffffff")
+@onready var sprite: Sprite2D = $Sprite
+@onready var shader: ShaderMaterial = $Sprite.material as ShaderMaterial
+var hit_info: HitInfo = HitInfo.new()
 
-@export var speed : float = 600.0
-
-var hit_info : HitInfo = HitInfo.new()
+func _ready() -> void:
+	sprite.modulate = color
+	shader.set_shader_parameter("glow_color", color)
 
 func _physics_process(delta):
 	velocity = Vector2.UP.rotated(rotation) * speed

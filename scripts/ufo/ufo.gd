@@ -1,3 +1,4 @@
+class_name UFO
 extends CharacterBody2D
 
 @export var can_move: bool = true
@@ -13,7 +14,7 @@ var target_direction: Vector2 = Vector2.RIGHT
 var target_speed: float
 
 var timer: Timer
-var missile_impact: PackedScene = preload("res://scenes/missile_impact.tscn")
+var missile_impact: PackedScene = preload("res://scenes/projectile/projectile_impact.tscn")
 
 func _ready() -> void:
 	speed = speed_range.x
@@ -50,7 +51,8 @@ func _on_ufo_tick() -> void:
 
 func hit(hit_info: HitInfo) -> void:
 	# health
-	health.take_damage(10)
+	if hit_info.source is Projectile:
+		health.take_damage(10)
 	
 	# impact
 	var impact := missile_impact.instantiate()
@@ -58,7 +60,7 @@ func hit(hit_info: HitInfo) -> void:
 	impact.position = to_local(hit_info.position)
 	add_child(impact)
 
-func _on_health_changed(current, max):
+func _on_health_changed(_current_hp, _max_hp):
 	pass
 
 func _on_died():

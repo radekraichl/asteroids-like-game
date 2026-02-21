@@ -1,30 +1,30 @@
 [gd_scene format=3 uid="uid://2qmlto6hvufb"]
 
-[ext_resource type="Script" uid="uid://ldf5hkiyqf3o" path="res://scripts/asteroid/missile_impact.gd" id="1_vxxbe"]
-[ext_resource type="Texture2D" uid="uid://s430da7g7up7" path="res://assets/impact.png" id="2_vxxbe"]
+[ext_resource type="Script" uid="uid://ldf5hkiyqf3o" path="res://scripts/projectile/projectile_impact.gd" id="1_txh3t"]
+[ext_resource type="Texture2D" uid="uid://s430da7g7up7" path="res://assets/impact.png" id="2_3l1g4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4s1rw"]
-atlas = ExtResource("2_vxxbe")
+atlas = ExtResource("2_3l1g4")
 region = Rect2(0, 0, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qukw7"]
-atlas = ExtResource("2_vxxbe")
+atlas = ExtResource("2_3l1g4")
 region = Rect2(8, 0, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0h6n3"]
-atlas = ExtResource("2_vxxbe")
+atlas = ExtResource("2_3l1g4")
 region = Rect2(16, 0, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_prbu7"]
-atlas = ExtResource("2_vxxbe")
+atlas = ExtResource("2_3l1g4")
 region = Rect2(24, 0, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kv8dn"]
-atlas = ExtResource("2_vxxbe")
+atlas = ExtResource("2_3l1g4")
 region = Rect2(32, 0, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mbcat"]
-atlas = ExtResource("2_vxxbe")
+atlas = ExtResource("2_3l1g4")
 region = Rect2(40, 0, 8, 8)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xowpd"]
@@ -53,8 +53,8 @@ animations = [{
 "speed": 30.0
 }]
 
-[node name="MissileImpact" type="Node2D" unique_id=1764574891]
-script = ExtResource("1_vxxbe")
+[node name="ProjectileImpact" type="Node2D" unique_id=1764574891]
+script = ExtResource("1_txh3t")
 
 [node name="Impact" type="AnimatedSprite2D" parent="." unique_id=1628722642]
 sprite_frames = SubResource("SpriteFrames_xowpd")

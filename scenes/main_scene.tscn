@@ -7,7 +7,6 @@
 [ext_resource type="FontFile" uid="uid://2xh1s6462lgr" path="res://assets/ari_w9500/ari-w9500-condensed-display.ttf" id="2_c16ls"]
 [ext_resource type="Script" uid="uid://dglk6ribm782h" path="res://scripts/ship/ship.gd" id="2_rt2n2"]
 [ext_resource type="Theme" uid="uid://cdqg5vqnwecyx" path="res://ui_theme.tres" id="3_7nt27"]
-[ext_resource type="PackedScene" uid="uid://cp8f44ulakgww" path="res://scenes/ship_missile.tscn" id="3_c16ls"]
 [ext_resource type="Script" uid="uid://td5o3in76l7v" path="res://scripts/gui/pause_menu.gd" id="4_xdqt8"]
 [ext_resource type="Texture2D" uid="uid://dgxvxu8iiohx8" path="res://assets/health_bar_bg.png" id="5_4w45t"]
 [ext_resource type="Texture2D" uid="uid://bjltt50f68alq" path="res://assets/health_bar.png" id="5_e1cbu"]
@@ -24,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://c041nfpmb8fys" path="res://assets/explosion_ship.png" id="12_01n6w"]
 [ext_resource type="AudioStream" uid="uid://ccq5rq58114g" path="res://assets/sfx/laser_blast.wav" id="13_si52b"]
 [ext_resource type="Script" uid="uid://va2o05eat8pu" path="res://scripts/gui/game_over.gd" id="15_58gk3"]
+[ext_resource type="PackedScene" uid="uid://cp8f44ulakgww" path="res://scenes/projectile/projectile.tscn" id="18_k67gn"]
 [ext_resource type="Texture2D" uid="uid://dwtib53yfu1wp" path="res://assets/ship.png" id="19_6p3nn"]
 [ext_resource type="PackedScene" uid="uid://2c5rea2hxnj8" path="res://scenes/wrap.tscn" id="24_k3g67"]
 [ext_resource type="PackedScene" uid="uid://ieyqnnvsdhg6" path="res://scenes/ufo.tscn" id="27_k67gn"]
@@ -444,7 +444,7 @@ z_index = 500
 position = Vector2(480, 382)
 collision_mask = 2
 script = ExtResource("2_rt2n2")
-missile_scene = ExtResource("3_c16ls")
+projectile_scene = ExtResource("18_k67gn")
 metadata/_edit_group_ = true
 
 [node name="Wrap" parent="Ship" unique_id=1397656902 instance=ExtResource("24_k3g67")]
