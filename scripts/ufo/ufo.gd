@@ -5,6 +5,8 @@ extends CharacterBody2D
 @export var turn_speed: float = 10.0
 @export var impact_color: Color = Color("ffe140")
 
+@onready var health: Health = $Health
+
 var direction: Vector2 = Vector2.RIGHT
 var speed: float
 var target_direction: Vector2 = Vector2.RIGHT
@@ -21,6 +23,10 @@ func _ready() -> void:
 	timer.timeout.connect(_on_ufo_tick)
 	add_child(timer)
 	_start_timer()
+	
+	# helath callback
+	health.died.connect(_on_died)
+	health.health_changed.connect(_on_health_changed)
 
 func _physics_process(delta: float) -> void:
 	direction = direction.lerp(target_direction, turn_speed * delta).normalized()
@@ -43,8 +49,17 @@ func _on_ufo_tick() -> void:
 	_start_timer()
 
 func hit(hit_info: HitInfo) -> void:
+	# health
+	health.take_damage(10)
+	
 	# impact
 	var impact := missile_impact.instantiate()
 	impact.color = impact_color
 	impact.position = to_local(hit_info.position)
 	add_child(impact)
+
+func _on_health_changed(current, max):
+	pass
+
+func _on_died():
+	queue_free()
