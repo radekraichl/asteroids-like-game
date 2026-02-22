@@ -15,13 +15,17 @@ enum GameState {
 }
 
 func _unhandled_input(event):
+	# DEBUG
 	if DEBUG and event is InputEventKey and event.pressed and not event.echo:
-		# debug quit
+		# quit
 		if event.keycode == KEY_Q:
 			get_tree().quit()
-		# debug reset scene
+		# reset scene
 		if event.keycode == KEY_R:
 			reset_game()
+		# fullscreen
+		if event.keycode == KEY_F:
+			toggle_fullscreen()
 
 func set_state(new_state : GameState):
 	if game_state == new_state:
@@ -68,3 +72,11 @@ func reset_game():
 	StatManager.reset_score()
 	StatManager.reset_health()
 	set_state(GameState.GAME)
+
+func toggle_fullscreen():
+	var mode := DisplayServer.window_get_mode()
+	
+	if mode == DisplayServer.WINDOW_MODE_FULLSCREEN:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)

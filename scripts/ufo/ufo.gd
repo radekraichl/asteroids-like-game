@@ -7,6 +7,9 @@ extends CharacterBody2D
 @export var impact_color: Color = Color("ffe140")
 
 @onready var health: Health = $Health
+@onready var explosion: AnimatedSprite2D = $Explosion
+@onready var body_collision: CollisionShape2D = $Body
+@onready var dome_collision: CollisionShape2D = $Dome
 
 var direction: Vector2 = Vector2.RIGHT
 var speed: float
@@ -17,6 +20,7 @@ var timer: Timer
 var missile_impact: PackedScene = preload("res://scenes/projectile/projectile_impact.tscn")
 
 func _ready() -> void:
+	explosion.visible = false
 	speed = speed_range.x
 	target_speed = speed_range.x
 	timer = Timer.new()
@@ -52,7 +56,7 @@ func _on_ufo_tick() -> void:
 func hit(hit_info: HitInfo) -> void:
 	# health
 	if hit_info.source is Projectile:
-		health.take_damage(10)
+		health.take_damage(30)
 	
 	# impact
 	var impact := missile_impact.instantiate()
@@ -64,4 +68,13 @@ func _on_health_changed(_current_hp, _max_hp):
 	pass
 
 func _on_died():
+	disable_collisions()
+	$Sprite2D.visible = false
+	explosion.visible = true
+	explosion.play("explode")
+	await explosion.animation_finished
 	queue_free()
+	
+func disable_collisions():
+	body_collision.disabled = true
+	dome_collision.disabled = true
