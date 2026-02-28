@@ -2,7 +2,7 @@ extends Node
 
 @onready var animation : AnimatedSprite2D = $Impact
 
-var color: Color = Color("eba54c")
+var color: Color = Color("eba54cff")
 
 func _ready():
 	animation.modulate = color

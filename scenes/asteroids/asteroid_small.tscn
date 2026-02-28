@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://yrk83ntgn1d5" path="res://scripts/asteroid/asteroid.gd" id="1_aw4ng"]
 [ext_resource type="Texture2D" uid="uid://b57i8uv3sntuo" path="res://assets/asteroids_sm.png" id="2_h4d64"]
 [ext_resource type="Texture2D" uid="uid://b15r8wdx88ki2" path="res://assets/explosion_asteroid_sm.png" id="3_4jaws"]
-[ext_resource type="AudioStream" uid="uid://bxv6b7h2df2ot" path="res://assets/sfx/explosion_sm.wav" id="4_h4d64"]
+[ext_resource type="AudioStream" uid="uid://cub4isqyp5byi" path="res://assets/sfx/explosion_sm.wav" id="4_h4d64"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x7wxb"]
 atlas = ExtResource("3_4jaws")

@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cybodbjhj40ky" path="res://scenes/asteroids/asteroid_middle.tscn" id="2_wwicn"]
 [ext_resource type="Texture2D" uid="uid://8vuvr1k7gq5i" path="res://assets/asteroids_bg.png" id="3_wwicn"]
 [ext_resource type="Texture2D" uid="uid://b4r1k5xifcnkx" path="res://assets/explosion_asteroid_bg.png" id="4_wwicn"]
-[ext_resource type="AudioStream" uid="uid://dhuqb2vm6v3jh" path="res://assets/sfx/explosion_bg.wav" id="5_cpdb5"]
+[ext_resource type="AudioStream" uid="uid://bjs8euui0pj8o" path="res://assets/sfx/explosion_bg.wav" id="5_cpdb5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wwicn"]
 atlas = ExtResource("4_wwicn")
@@ -100,4 +100,6 @@ shape = SubResource("CircleShape2D_8rk7o")
 
 [node name="ExplosionSFX" type="AudioStreamPlayer2D" parent="." unique_id=1582818202]
 stream = ExtResource("5_cpdb5")
+volume_db = 3.0
+pitch_scale = 0.9
 bus = &"SFX"

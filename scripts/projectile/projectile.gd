@@ -8,6 +8,7 @@ extends CharacterBody2D
 var hit_info: HitInfo = HitInfo.new()
 
 func _ready() -> void:
+	$VisibleOnScreenNotifier.visible = true
 	sprite.modulate = color
 	shader.set_shader_parameter("glow_color", color)
 
@@ -19,7 +20,7 @@ func _physics_process(delta):
 		hit_info.position = collision.get_position()
 		hit_info.velocity = velocity
 		hit_info.source = self
-		
+
 		var hit = collision.get_collider()
 		if hit.has_method("hit"):
 			hit.hit(hit_info)

@@ -40,22 +40,22 @@ func _ready():
 func _process(_delta):
 	if StatManager.health <= 0:
 		destroy()
-		
+
 	turn_input = 0.0
 	if Input.is_action_pressed("ui_left"):
 		turn_input -= 1.0
 	if Input.is_action_pressed("ui_right"):
 		turn_input += 1.0
-		
+
 	is_thrusting = Input.is_action_pressed("ui_up")
-	
+
 	if Input.is_action_just_pressed("shoot"):
 		var missile = projectile_scene.instantiate()
 		var offset = Vector2.UP.rotated(global_rotation) * missile_forward_offset;
 		missile.global_position = global_position + offset
 		missile.global_rotation = global_rotation
 		get_parent().add_child(missile)
-		
+
 		if play_sfx:
 			missile_sfx.play()
 
@@ -89,7 +89,7 @@ func _physics_process(delta):
 	rotation += angular_velocity * delta
 
 	# movement forward based on current rotation
-	var direction := Vector2.ZERO	
+	var direction := Vector2.ZERO
 	if is_thrusting:
 		direction = Vector2.UP.rotated(rotation)
 

@@ -30,7 +30,7 @@ var missile_impact: PackedScene = preload("res://scenes/projectile/projectile_im
 func _ready():
 	if asteroid_container == null:
 		asteroid_container = %AsteroidContainer
-		
+
 	# pick an extra bonus
 	destroy_extra_bonus = randi_range(0, max_extra_bonus)
 	# pick a random sprite
@@ -49,7 +49,7 @@ func _physics_process(delta):
 	# movement
 	velocity = movement_direction * speed
 	move_and_collide(velocity * delta)
-	
+
 	update_entered_screen()
 	if has_entered_screen:
 		wrap_position()
@@ -60,35 +60,35 @@ func hit(hit_info : HitInfo):
 		return
 
 	StatManager.add_points(score_on_hit + destroy_extra_bonus)
-	
+
 	# impact
 	var impact := missile_impact.instantiate()
 	impact.position = to_local(hit_info.position)
 	add_child(impact)
-	
+
 	# hit points
 	hit_points -= 1
 	if hit_points > 0:
 		return
-	
+
 	var spread := deg_to_rad(randf_range(90.0, 100.0))
 	var base_angle := hit_info.velocity.angle() + deg_to_rad(randf_range(70.0, 80.0))
 
 	if child_count == 2:
 		spread = deg_to_rad(randf_range(80.0, 140.0))
 		base_angle = hit_info.velocity.angle() + spread
-	
+
 	for i in child_count:
 		if (child_asteroid_scene == null):
 			break
 		var asteroid := child_asteroid_scene.instantiate()
 		var angle := base_angle + spread * i
-		
+
 		asteroid.global_position = global_position
-		asteroid.asteroid_container = asteroid_container  
+		asteroid.asteroid_container = asteroid_container
 		asteroid.movement_direction = Vector2.LEFT.rotated(angle)
 		asteroid_container.add_child(asteroid)
-	
+
 	destroy_asteroid()
 
 func destroy_asteroid():
@@ -104,7 +104,7 @@ func destroy_asteroid():
 	explosion.visible = false
 	await explosion_sfx.finished
 	queue_free()
-	
+
 func wrap_position():
 	if position.x < 0:
 		position.x = Setup.screen_width

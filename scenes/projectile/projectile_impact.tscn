@@ -53,9 +53,33 @@ animations = [{
 "speed": 30.0
 }]
 
+[sub_resource type="Curve" id="Curve_txh3t"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+point_0/position = Vector2(0, 1)
+point_1/position = Vector2(1, 1)
+
 [node name="ProjectileImpact" type="Node2D" unique_id=1764574891]
 script = ExtResource("1_txh3t")
 
 [node name="Impact" type="AnimatedSprite2D" parent="." unique_id=1628722642]
 sprite_frames = SubResource("SpriteFrames_xowpd")
 animation = &"impact"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=1468255136]
+amount = 16
+lifetime = 0.2
+explosiveness = 1.0
+randomness = 1.0
+lifetime_randomness = 0.5
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 100.0
+scale_amount_min = 0.8
+scale_amount_max = 1.2
+color = Color(1, 0.71464837, 0, 1)
+hue_variation_min = 1.0
+hue_variation_max = 1.0
+hue_variation_curve = SubResource("Curve_txh3t")

@@ -10,6 +10,7 @@ extends CharacterBody2D
 @onready var explosion: AnimatedSprite2D = $Explosion
 @onready var body_collision: CollisionShape2D = $Body
 @onready var dome_collision: CollisionShape2D = $Dome
+@onready var explosion_sfx : AudioStreamPlayer2D = $ExplosionSFX
 
 var direction: Vector2 = Vector2.RIGHT
 var speed: float
@@ -28,7 +29,7 @@ func _ready() -> void:
 	timer.timeout.connect(_on_ufo_tick)
 	add_child(timer)
 	_start_timer()
-	
+
 	# helath callback
 	health.died.connect(_on_died)
 	health.health_changed.connect(_on_health_changed)
@@ -36,10 +37,10 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	direction = direction.lerp(target_direction, turn_speed * delta).normalized()
 	speed = lerp(speed, target_speed, turn_speed * delta)
-	
+
 	if can_move:
 		velocity = direction * speed
-		move_and_slide()
+		move_and_collide(velocity * delta)
 
 func _start_timer() -> void:
 	timer.wait_time = randf_range(1.0, 3.0)
@@ -57,7 +58,7 @@ func hit(hit_info: HitInfo) -> void:
 	# health
 	if hit_info.source is Projectile:
 		health.take_damage(30)
-	
+
 	# impact
 	var impact := missile_impact.instantiate()
 	impact.color = impact_color
@@ -68,13 +69,20 @@ func _on_health_changed(_current_hp, _max_hp):
 	pass
 
 func _on_died():
+	can_move = false
 	disable_collisions()
 	$Sprite2D.visible = false
 	explosion.visible = true
 	explosion.play("explode")
+	explosion_sfx.play()
+
+	remove_child(explosion_sfx)
+	get_tree().root.add_child(explosion_sfx)
+	explosion_sfx.finished.connect(explosion_sfx.queue_free)
+
 	await explosion.animation_finished
 	queue_free()
-	
+
 func disable_collisions():
 	body_collision.disabled = true
 	dome_collision.disabled = true

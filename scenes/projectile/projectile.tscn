@@ -31,7 +31,7 @@ visible = false
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_cdnlh")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=934467458]
+[node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier2D" parent="." unique_id=934467458]
 visible = false
 
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier" to="." method="_on_screen_exited"]

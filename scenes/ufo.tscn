@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c4xwd4c0xb7kc" path="res://assets/ufo.png" id="3_vvsiw"]
 [ext_resource type="Script" uid="uid://bovhliyr7f8m7" path="res://scripts/health.gd" id="4_1aa4c"]
 [ext_resource type="Texture2D" uid="uid://cxpane82imrnw" path="res://assets/explosion_ufo.png" id="5_vvsiw"]
+[ext_resource type="AudioStream" uid="uid://pun5m7qx6h4y" path="res://assets/sfx/ufo_explosion_sfx.wav" id="6_linyg"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k3g67"]
 radius = 7.0
@@ -13,41 +14,40 @@ height = 41.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_4bgka"]
 radius = 9.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_vvsiw"]
+atlas = ExtResource("5_vvsiw")
+region = Rect2(0, 0, 48, 48)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_linyg"]
 atlas = ExtResource("5_vvsiw")
-region = Rect2(0, 0, 64, 48)
+region = Rect2(48, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tkk3j"]
 atlas = ExtResource("5_vvsiw")
-region = Rect2(64, 0, 64, 48)
+region = Rect2(96, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ai8vk"]
 atlas = ExtResource("5_vvsiw")
-region = Rect2(128, 0, 64, 48)
+region = Rect2(144, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5w6k5"]
 atlas = ExtResource("5_vvsiw")
-region = Rect2(192, 0, 64, 48)
+region = Rect2(192, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lan7f"]
 atlas = ExtResource("5_vvsiw")
-region = Rect2(256, 0, 64, 48)
+region = Rect2(240, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5rfrm"]
 atlas = ExtResource("5_vvsiw")
-region = Rect2(320, 0, 64, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ujrry"]
-atlas = ExtResource("5_vvsiw")
-region = Rect2(384, 0, 64, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_e1yb4"]
-atlas = ExtResource("5_vvsiw")
-region = Rect2(448, 0, 64, 48)
+region = Rect2(288, 0, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4l4ni"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vvsiw")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_linyg")
 }, {
@@ -65,16 +65,10 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5rfrm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ujrry")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_e1yb4")
 }],
 "loop": false,
 "name": &"explode",
-"speed": 14.0
+"speed": 16.0
 }]
 
 [node name="UFO" type="CharacterBody2D" unique_id=1375694361]
@@ -94,11 +88,13 @@ script = ExtResource("4_1aa4c")
 texture = ExtResource("3_vvsiw")
 
 [node name="Body" type="CollisionShape2D" parent="." unique_id=1606977033]
+visible = false
 position = Vector2(0, 2)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_k3g67")
 
 [node name="Dome" type="CollisionShape2D" parent="." unique_id=180798667]
+visible = false
 position = Vector2(0, -2)
 shape = SubResource("CircleShape2D_4bgka")
 
@@ -106,5 +102,10 @@ shape = SubResource("CircleShape2D_4bgka")
 visible = false
 sprite_frames = SubResource("SpriteFrames_4l4ni")
 animation = &"explode"
-frame = 7
+frame = 6
 frame_progress = 1.0
+
+[node name="ExplosionSFX" type="AudioStreamPlayer2D" parent="." unique_id=1040839832]
+stream = ExtResource("6_linyg")
+volume_db = 8.0
+bus = &"SFX"

@@ -18,13 +18,13 @@ func take_damage(amount: int) -> void:
 		return
 	if is_dead():
 		return
-	
+
 	current_health -= amount
 	current_health = max(current_health, 0)
-	
+
 	damaged.emit(amount)
 	_emit_health_changed()
-	
+
 	if current_health == 0:
 		died.emit()
 
@@ -33,10 +33,10 @@ func heal(amount: int) -> void:
 		return
 	if is_dead():
 		return
-	
+
 	current_health += amount
 	current_health = min(current_health, max_health)
-	
+
 	healed.emit(amount)
 	_emit_health_changed()
 
