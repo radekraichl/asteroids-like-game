@@ -30,7 +30,6 @@ var angular_velocity: float = 0.0
 # projectile
 @export var projectile_scene : PackedScene
 @onready var missile_sfx : AudioStreamPlayer2D = $MissileSFX
-var missile_forward_offset : float = 0
 
 var hit_info : HitInfo = HitInfo.new()
 
@@ -53,7 +52,7 @@ func _process(_delta):
 
 	if Input.is_action_just_pressed("shoot"):
 		var missile = projectile_scene.instantiate()
-		var offset = Vector2.UP.rotated(global_rotation) * missile_forward_offset;
+		var offset = Vector2.UP.rotated(global_rotation)
 		missile.global_position = global_position + offset
 		missile.global_rotation = global_rotation
 		get_parent().add_child(missile)
