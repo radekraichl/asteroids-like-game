@@ -21,6 +21,7 @@ var timer: Timer
 var missile_impact: PackedScene = preload("res://scenes/projectile/projectile_impact.tscn")
 
 func _ready() -> void:
+	disable_collisions()
 	explosion.visible = false
 	speed = speed_range.x
 	target_speed = speed_range.x
@@ -33,6 +34,8 @@ func _ready() -> void:
 	# helath callback
 	health.died.connect(_on_died)
 	health.health_changed.connect(_on_health_changed)
+
+	#disable_collisions()
 
 func _physics_process(delta: float) -> void:
 	direction = direction.lerp(target_direction, turn_speed * delta).normalized()

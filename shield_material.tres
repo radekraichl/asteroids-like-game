@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dj1vi8p23ws73"]
+
+[ext_resource type="Shader" uid="uid://1jq6hug04ed4" path="res://scripts/glow.gdshader" id="1_6mnvn"]
+
+[resource]
+resource_local_to_scene = true
+resource_name = "asd"
+shader = ExtResource("1_6mnvn")
+shader_parameter/glow_color = Color(0.30270457, 0.3536111, 1, 1)
+shader_parameter/glow_size = 5.1010001947975
+shader_parameter/glow_intensity = 0.99600002356
+shader_parameter/glow_falloff = 1.0

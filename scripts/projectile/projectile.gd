@@ -1,30 +1,44 @@
 class_name Projectile
 extends CharacterBody2D
 
-@export var speed: float = 500.0
+@export var speed: float = 600.0
 @export var color: Color = Color("ffffff")
+
 @onready var sprite: Sprite2D = $Sprite
+@onready var _raycast: RayCast2D = $RayCast2D
 @onready var shader: ShaderMaterial = $Sprite.material as ShaderMaterial
+@onready var on_screen_notifier : VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier
+
 var hit_info: HitInfo = HitInfo.new()
 
 func _ready() -> void:
-	$VisibleOnScreenNotifier.visible = true
+	on_screen_notifier.visible = true
 	sprite.modulate = color
 	shader.set_shader_parameter("glow_color", color)
 
 func _physics_process(delta):
 	velocity = Vector2.UP.rotated(rotation) * speed
 	var collision = move_and_collide(velocity * delta)
+
+	_raycast.target_position = Vector2.UP * (speed * delta)
+	print(_raycast.target_position.length())
+
+	if _raycast.is_colliding():
+		hit_info.position = _raycast.get_collision_point()
+		var object = _raycast.get_collider()
+		if object.has_method("hit"):
+			object.hit(hit_info)
+		queue_free()
+
 	if collision:
 		hit_info.angle = collision.get_angle()
 		hit_info.position = collision.get_position()
 		hit_info.velocity = velocity
 		hit_info.source = self
 
-		var hit = collision.get_collider()
-		if hit.has_method("hit"):
-			hit.hit(hit_info)
-		queue_free()
+		var object = collision.get_collider()
+		if object.has_method("hit"):
+			object.hit(hit_info)
 
 func _on_screen_exited():
 	queue_free()

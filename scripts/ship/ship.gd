@@ -7,7 +7,8 @@ signal ship_destroyed
 @export var play_sfx : bool = true
 
 # movement
-@export var max_speed := 300
+@export var max_speed: float = 300
+@export var center_screen_position: bool = true
 var acceleration := 400
 var friction := 100
 var is_thrusting : bool
@@ -29,13 +30,14 @@ var angular_velocity: float = 0.0
 # projectile
 @export var projectile_scene : PackedScene
 @onready var missile_sfx : AudioStreamPlayer2D = $MissileSFX
-var missile_forward_offset : float = 30
+var missile_forward_offset : float = 0
 
 var hit_info : HitInfo = HitInfo.new()
 
 func _ready():
 	GameManager.register_ship(self)
-	position = Vector2(Setup.screen_width / 2, Setup.screen_height / 2)
+	if center_screen_position:
+		position = Vector2(Setup.screen_width / 2, Setup.screen_height / 2)
 
 func _process(_delta):
 	if StatManager.health <= 0:

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cohf02gqkp0vg" path="res://scripts/projectile/projectile.gd" id="1_0uoyr"]
 [ext_resource type="Texture2D" uid="uid://cvpo1x6u5a4jw" path="res://assets/projectile.png" id="1_cdnlh"]
-[ext_resource type="Shader" uid="uid://1jq6hug04ed4" path="res://scenes/projectile/projectile.gdshader" id="2_lw0th"]
+[ext_resource type="Shader" uid="uid://1jq6hug04ed4" path="res://scripts/glow.gdshader" id="2_lw0th"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lw0th"]
 shader = ExtResource("2_lw0th")
@@ -12,13 +12,13 @@ shader_parameter/glow_intensity = 0.9000000189999999
 shader_parameter/glow_falloff = 4.000000142499999
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cdnlh"]
-size = Vector2(2, 15)
+size = Vector2(2, 14)
 
 [node name="Projectile" type="CharacterBody2D" unique_id=620313389]
 collision_layer = 4
 collision_mask = 10
 script = ExtResource("1_0uoyr")
-speed = 600.0
+speed = 400.0
 color = Color(0.6841424, 0.81653786, 1, 1)
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=883835974]
@@ -27,11 +27,15 @@ material = SubResource("ShaderMaterial_lw0th")
 texture = ExtResource("1_cdnlh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=565795100]
-visible = false
-position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_cdnlh")
 
 [node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier2D" parent="." unique_id=934467458]
 visible = false
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=512872678]
+position = Vector2(0, -7)
+target_position = Vector2(0, -14)
+collision_mask = 8
+collide_with_areas = true
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier" to="." method="_on_screen_exited"]
