@@ -78,9 +78,9 @@ animations = [{
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lan7f"]
 shader = ExtResource("7_lan7f")
 shader_parameter/glow_color = Color(0.19545619, 0.35268253, 0.6907189, 1)
-shader_parameter/glow_size = 4.1530001497675
-shader_parameter/glow_intensity = 0.682000008645
-shader_parameter/glow_falloff = 2.58800007543
+shader_parameter/glow_size = 6.200000247
+shader_parameter/glow_intensity = 1.1430000305424999
+shader_parameter/glow_falloff = 5.00000019
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ujrry"]
 atlas = ExtResource("7_5w6k5")
@@ -159,8 +159,9 @@ material = SubResource("ShaderMaterial_lan7f")
 sprite_frames = SubResource("SpriteFrames_bwq4s")
 autoplay = "default"
 script = ExtResource("7_tkk3j")
-impact_color = Color(0.26489034, 0.3985432, 0.6709894, 1)
-particles_color = Color(0.38430077, 0.5180117, 0.78936666, 1)
+shield_color = Color(0.57248807, 0.7342963, 0.8880144, 1)
+impact_color = Color(0.4831623, 0.7224146, 0.9537795, 1)
+particles_color = Color(0.29484522, 0.58424395, 0.8617083, 1)
 metadata/_custom_type_script = "uid://dawg0e58u67e0"
 
 [node name="ShieldCollisionArea" type="Area2D" parent="Shield" unique_id=1651385173]
