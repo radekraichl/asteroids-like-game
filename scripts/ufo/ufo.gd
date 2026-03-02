@@ -1,6 +1,7 @@
 class_name UFO
 extends CharacterBody2D
 
+@export var projectile_damage: int = 20
 @export var can_move: bool = true
 @export var speed_range: Vector2 = Vector2(90.0, 130.0)
 @export var turn_speed: float = 10.0
@@ -12,6 +13,8 @@ extends CharacterBody2D
 @onready var dome_collision: CollisionShape2D = $Dome
 @onready var explosion_sfx : AudioStreamPlayer2D = $ExplosionSFX
 
+@onready var _shield: Shield = $Shield
+
 var direction: Vector2 = Vector2.RIGHT
 var speed: float
 var target_direction: Vector2 = Vector2.RIGHT
@@ -21,7 +24,6 @@ var timer: Timer
 var missile_impact: PackedScene = preload("res://scenes/projectile/projectile_impact.tscn")
 
 func _ready() -> void:
-	disable_collisions()
 	explosion.visible = false
 	speed = speed_range.x
 	target_speed = speed_range.x
@@ -35,7 +37,11 @@ func _ready() -> void:
 	health.died.connect(_on_died)
 	health.health_changed.connect(_on_health_changed)
 
-	#disable_collisions()
+	# shield deactivated callback
+	_shield.on_deactivated = _on_shield_deactivated
+
+	### DEBUG ###
+	set_shield_active(2)
 
 func _physics_process(delta: float) -> void:
 	direction = direction.lerp(target_direction, turn_speed * delta).normalized()
@@ -49,6 +55,25 @@ func _start_timer() -> void:
 	timer.wait_time = randf_range(1.0, 3.0)
 	timer.start()
 
+func hit(hit_info: HitInfo) -> void:
+	# health
+	if hit_info.source is Projectile:
+		health.take_damage(projectile_damage)
+
+	# impact
+	var impact := missile_impact.instantiate()
+	impact.color = impact_color
+	impact.position = to_local(hit_info.position)
+	add_child(impact)
+
+func set_shield_active(time: float) -> void:
+	_shield.set_active(time)
+	disable_collisions(true)
+
+func disable_collisions(value: bool):
+	body_collision.disabled = value
+	dome_collision.disabled = value
+
 func _on_ufo_tick() -> void:
 	var random_angle: float = randf_range(45, 60)
 	if randf() > 0.5:
@@ -57,23 +82,9 @@ func _on_ufo_tick() -> void:
 	target_speed = randf_range(speed_range.x, speed_range.y)
 	_start_timer()
 
-func hit(hit_info: HitInfo) -> void:
-	# health
-	if hit_info.source is Projectile:
-		health.take_damage(30)
-
-	# impact
-	var impact := missile_impact.instantiate()
-	impact.color = impact_color
-	impact.position = to_local(hit_info.position)
-	add_child(impact)
-
-func _on_health_changed(_current_hp, _max_hp):
-	pass
-
 func _on_died():
 	can_move = false
-	disable_collisions()
+	disable_collisions(true)
 	$Sprite2D.visible = false
 	explosion.visible = true
 	explosion.play("explode")
@@ -86,6 +97,8 @@ func _on_died():
 	await explosion.animation_finished
 	queue_free()
 
-func disable_collisions():
-	body_collision.disabled = true
-	dome_collision.disabled = true
+func _on_shield_deactivated() -> void:
+	disable_collisions(false)
+
+func _on_health_changed(_current_hp, _max_hp):
+	pass

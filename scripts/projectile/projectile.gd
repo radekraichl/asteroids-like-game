@@ -18,18 +18,8 @@ func _ready() -> void:
 
 func _physics_process(delta):
 	velocity = Vector2.UP.rotated(rotation) * speed
+
 	var collision = move_and_collide(velocity * delta)
-
-	_raycast.target_position = Vector2.UP * (speed * delta)
-	print(_raycast.target_position.length())
-
-	if _raycast.is_colliding():
-		hit_info.position = _raycast.get_collision_point()
-		var object = _raycast.get_collider()
-		if object.has_method("hit"):
-			object.hit(hit_info)
-		queue_free()
-
 	if collision:
 		hit_info.angle = collision.get_angle()
 		hit_info.position = collision.get_position()
@@ -39,6 +29,16 @@ func _physics_process(delta):
 		var object = collision.get_collider()
 		if object.has_method("hit"):
 			object.hit(hit_info)
+		queue_free()
+		return
+
+	_raycast.target_position = Vector2.UP * (speed * delta)
+	if _raycast.is_colliding():
+		hit_info.position = _raycast.get_collision_point()
+		var object = _raycast.get_collider()
+		if object.has_method("hit"):
+			object.hit(hit_info)
+		queue_free()
 
 func _on_screen_exited():
 	queue_free()

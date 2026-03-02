@@ -1,17 +1,45 @@
+class_name Shield
 extends AnimatedSprite2D
 
 @export var shield_color: Color = Color("0f73d2ff")
 @export var impact_color: Color = Color("1c8ffdff")
 @export var particles_color: Color = Color("41a2ffff")
+
 @onready var collision_shape: CollisionShape2D = %CollisionShape
+
+var on_deactivated : Callable
+
 var missile_impact: PackedScene = preload("res://scenes/projectile/projectile_impact.tscn")
+var _shield_timer: Timer
 
 func _ready() -> void:
-	modulate = shield_color
-	set_active(true)
+	self_modulate = shield_color
+	_active(false)
 
-func set_active(active: bool) -> void:
-	collision_shape.disabled = not active
+	# timer setup
+	_shield_timer = Timer.new()
+	_shield_timer.one_shot = true
+	_shield_timer.timeout.connect(_on_shield_timeout)
+	add_child(_shield_timer)
+
+func set_active(time: float) -> void:
+	# zero time protection
+	if time <= 0.0:
+		_shield_timer.stop()
+		_active(false)
+		return
+
+	# start timer and shield activation
+	_shield_timer.start(time)
+	_active(true)
+
+func _on_shield_timeout() -> void:
+	_active(false)
+	on_deactivated.call()
+
+func _active(value: bool):
+	visible = value
+	collision_shape.disabled = not value
 
 func hit(hit_info: HitInfo):
 	# impact
@@ -19,5 +47,5 @@ func hit(hit_info: HitInfo):
 	impact.color = impact_color
 	impact.particles_color = particles_color
 
-	impact.global_position = hit_info.position
-	get_tree().current_scene.add_child(impact)
+	impact.position = to_local(hit_info.position)
+	add_child(impact)
