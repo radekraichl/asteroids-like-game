@@ -35,7 +35,8 @@ func set_active(time: float) -> void:
 
 func _on_shield_timeout() -> void:
 	_active(false)
-	on_deactivated.call()
+	if on_deactivated:
+		on_deactivated.call()
 
 func _active(value: bool):
 	visible = value

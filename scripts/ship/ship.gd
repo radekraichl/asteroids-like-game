@@ -29,7 +29,7 @@ var angular_velocity: float = 0.0
 
 # projectile
 @export var projectile_scene : PackedScene
-@onready var missile_sfx : AudioStreamPlayer2D = $MissileSFX
+@onready var projectile_sfx : AudioStreamPlayer2D = $MissileSFX
 
 var hit_info : HitInfo = HitInfo.new()
 
@@ -51,14 +51,14 @@ func _process(_delta):
 	is_thrusting = Input.is_action_pressed("ui_up")
 
 	if Input.is_action_just_pressed("shoot"):
-		var missile = projectile_scene.instantiate()
-		var offset = Vector2.UP.rotated(global_rotation)
-		missile.global_position = global_position + offset
-		missile.global_rotation = global_rotation
-		get_parent().add_child(missile)
+		var projectile = projectile_scene.instantiate()
+		projectile.global_position = global_position
+		projectile.global_rotation = global_rotation
+		projectile.set_collision_mask_value(LayerManager.Layer.PLAYER, false)
+		get_parent().add_child(projectile)
 
 		if play_sfx:
-			missile_sfx.play()
+			projectile_sfx.play()
 
 	if is_thrusting != was_thrusting:
 		if is_thrusting:
