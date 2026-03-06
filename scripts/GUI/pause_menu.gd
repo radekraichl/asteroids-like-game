@@ -6,6 +6,7 @@ class_name PauseMenu
 @onready var open_close_sfx: AudioStreamPlayer = $OpenCloseSFX
 @onready var menu_root : Control = $MenuRoot
 @onready var settings_root : Control = $SettingsRoot
+@onready var fade_panel : FadePanel = $FadePanel
 
 enum Screen {
 	NONE,
@@ -18,25 +19,30 @@ var last_focused : Control
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	pass
 
 func set_screen(screen : Screen):
 	current_screen = screen
 	match screen:
 		Screen.NONE:
 			GameManager.set_state(GameManager.GameState.GAME)
-			settings_root.hide()
-			menu_root.hide()
-			hide()
 			open_close_sfx.play()
+			menu_root.hide()
+			fade_panel.fade_out()
+			await fade_panel.fade_finished
+			hide()
+			settings_root.hide()
 		Screen.PAUSED:
 			GameManager.set_state(GameManager.GameState.PAUSED)
+			open_close_sfx.play()
 			show()
+
+			if fade_panel.get_state() == fade_panel.FadeState.CLEAR:
+				fade_panel.fade_in()
+
 			menu_root.show()
 			settings_root.hide()
 			resume_button.grab_focus()
 			last_focused = resume_button
-			open_close_sfx.play()
 		Screen.SETTINGS:
 			menu_root.hide()
 			settings_root.show()
@@ -50,11 +56,14 @@ func _unhandled_input(event):
 		last_focused = focused
 		focus_sound.play()
 
-	if not event.is_action_pressed("ui_cancel"):
-		return
 	if GameManager.game_state == GameManager.GameState.GAME_OVER:
 		return
+	if fade_panel.get_state() == fade_panel.FadeState.FADING:
+		return
+	if not event.is_action_pressed("ui_cancel"):
+		return
 
+	# back one level when pressing ESC key
 	match current_screen:
 		Screen.NONE:
 			set_screen(Screen.PAUSED)
