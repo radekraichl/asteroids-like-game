@@ -112,7 +112,8 @@ func _physics_process(delta):
 	move_and_collide(velocity * delta)
 
 func _on_area_2d_body_entered(body):
-	if LayerManager.is_in_layer(body, LayerManager.Layer.ASTEROID):
+	#if LayerManager.is_in_layer(body, LayerManager.Layer.ASTEROID):
+	if body.get_collision_layer_value(LayerManager.Layer.ASTEROID):
 		var _damage = (body as Asteroid).contact_damage
 		StatManager.set_health(StatManager.health - _damage)
 		if body.has_method("hit"):

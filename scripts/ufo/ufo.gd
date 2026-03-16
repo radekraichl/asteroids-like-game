@@ -20,38 +20,20 @@ var speed: float
 var target_direction: Vector2 = Vector2.RIGHT
 var target_speed: float
 
+var _scheduler := RandomEventScheduler.new()
 var missile_impact: PackedScene = preload("res://scenes/projectile/projectile_impact.tscn")
-
-var _movement_timer: Timer = Timer.new()
-var _shooting_timer: Timer = Timer.new()
-var _start_movement_timer = _start_random_timer.bind(_movement_timer, 2, 4)
-var _start_shooting_timer = _start_random_timer.bind(_shooting_timer, 1, 1)
-
-
-func _test():
-	print("test event")
-
-var _scheduler: RandomEventScheduler = RandomEventScheduler.new()
 
 func _ready() -> void:
 	add_child(_scheduler)
-	_scheduler.add_event("test", 0.3, 0.4, _test, true)
+
+	# setup movement timer
+	_scheduler.add_event("movement", 2, 4, _on_ufo_movement_tick, true)
+	# setup shooting timer
+	_scheduler.add_event("shooting", 0.5, 1, _on_ufo_shooting_tick)
 
 	explosion.visible = false
 	speed = speed_range.x
 	target_speed = speed_range.x
-
-	# setup movement timer
-	_movement_timer.one_shot = true
-	_movement_timer.timeout.connect(_on_ufo_movement_tick)
-	add_child(_movement_timer)
-	_start_movement_timer.call()
-
-	# setup shooting timer
-	_shooting_timer.one_shot = true
-	_shooting_timer.timeout.connect(_on_ufo_shooting_tick)
-	add_child(_shooting_timer)
-	_start_shooting_timer.call()
 
 	# helath callback
 	health.died.connect(_on_died)
@@ -89,20 +71,15 @@ func disable_collisions(value: bool):
 	body_collision.disabled = value
 	dome_collision.disabled = value
 
-func _start_random_timer(timer: Timer, min_t, max_t) -> void:
-	timer.wait_time = randf_range(min_t, max_t)
-	timer.start()
-
 func _on_ufo_movement_tick() -> void:
 	var random_angle: float = randf_range(45, 60)
 	if randf() > 0.5:
 		random_angle = -random_angle
 	target_direction = direction.rotated(deg_to_rad(random_angle))
 	target_speed = randf_range(speed_range.x, speed_range.y)
-	_start_movement_timer.call()
 
 func _on_ufo_shooting_tick() -> void:
-	_start_shooting_timer.call()
+	print_debug("_on_ufo_shooting_tick()")
 
 func _on_died():
 	can_move = false

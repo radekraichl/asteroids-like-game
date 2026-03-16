@@ -443,7 +443,7 @@ vertical_alignment = 1
 [node name="Ship" type="CharacterBody2D" parent="." unique_id=946185912]
 unique_name_in_owner = true
 z_index = 500
-position = Vector2(233, 172)
+position = Vector2(480, 264)
 collision_mask = 2
 script = ExtResource("2_rt2n2")
 center_screen_position = false
@@ -460,13 +460,11 @@ texture = ExtResource("19_6p3nn")
 offset = Vector2(0, -6)
 
 [node name="Area2D" type="Area2D" parent="Ship" unique_id=610386734]
-visible = false
 collision_mask = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ship/Area2D" unique_id=419081471]
-visible = false
 position = Vector2(0, 1)
-polygon = PackedVector2Array(0, -23, 16, 9, -16, 9, -7.4013977, -8.197205)
+polygon = PackedVector2Array(0, -24, 17, 10, -17, 10)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ship" unique_id=387866298]
 visible = false
@@ -492,7 +490,6 @@ bus = &"SFX"
 
 [node name="SpawnManager" type="Node" parent="." unique_id=27467253]
 script = ExtResource("8_18nlu")
-spawn = true
 asteroid_scene = ExtResource("10_e1cbu")
 
 [node name="AsteroidContainer" type="Node2D" parent="." unique_id=1217039606]
