@@ -2,6 +2,7 @@ class_name Projectile
 extends CharacterBody2D
 
 @export var speed: float = 600.0
+@export var bonus_speed: float = 0.0
 @export var color: Color = Color("ffffff")
 
 @onready var sprite: Sprite2D = $Sprite

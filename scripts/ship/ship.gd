@@ -38,36 +38,18 @@ func _ready():
 	if center_screen_position:
 		position = Vector2(Setup.screen_width / 2, Setup.screen_height / 2)
 
-func _process(_delta):
+func _physics_process(delta):
 	if StatManager.health <= 0:
 		destroy()
 
+	# input
 	turn_input = 0.0
 	if Input.is_action_pressed("ui_left"):
 		turn_input -= 1.0
 	if Input.is_action_pressed("ui_right"):
 		turn_input += 1.0
-
 	is_thrusting = Input.is_action_pressed("ui_up")
 
-	if Input.is_action_just_pressed("shoot"):
-		var projectile = projectile_scene.instantiate()
-		projectile.global_position = global_position
-		projectile.global_rotation = global_rotation
-		projectile.set_collision_mask_value(LayerManager.Layer.PLAYER, false)
-		get_parent().add_child(projectile)
-
-		if play_sfx:
-			projectile_sfx.play()
-
-	if is_thrusting != was_thrusting:
-		if is_thrusting:
-			plumes.play("thrust")
-		else:
-			plumes.play("idle")
-	was_thrusting = is_thrusting
-
-func _physics_process(delta):
 	# angular acceleration
 	angular_velocity += turn_input * rotation_accel * delta
 
@@ -110,6 +92,26 @@ func _physics_process(delta):
 		velocity = velocity.normalized() * max_speed
 
 	move_and_collide(velocity * delta)
+
+	# shoot input
+	if Input.is_action_just_pressed("shoot"):
+		var projectile = projectile_scene.instantiate()
+		projectile.global_position = global_position + velocity * get_physics_process_delta_time()
+		projectile.speed += velocity.length()
+		projectile.global_rotation = global_rotation
+		projectile.set_collision_mask_value(LayerManager.Layer.PLAYER, false)
+		get_parent().add_child(projectile)
+
+		if play_sfx:
+			projectile_sfx.play()
+
+	# thrusting animation
+	if is_thrusting != was_thrusting:
+		if is_thrusting:
+			plumes.play("thrust")
+		else:
+			plumes.play("idle")
+	was_thrusting = is_thrusting
 
 func _on_area_2d_body_entered(body):
 	#if LayerManager.is_in_layer(body, LayerManager.Layer.ASTEROID):
