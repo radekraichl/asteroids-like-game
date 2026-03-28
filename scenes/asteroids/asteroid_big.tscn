@@ -72,13 +72,13 @@ collision_mask = 5
 script = ExtResource("1_fdwrs")
 child_asteroid_scene = ExtResource("2_wwicn")
 hit_points = 3
-score_on_hit = 350
-max_extra_bonus = 60
 contact_damage = 40
 child_count = 3
 sprite_size = 32
 speed_range = Vector2(60, 100)
 rotation_speed_range = Vector2(4, 6)
+score_on_hit = 250
+max_extra_bonus = 30
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1255030340]

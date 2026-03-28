@@ -115,12 +115,12 @@ func _physics_process(delta):
 	was_thrusting = is_thrusting
 
 func _on_area_2d_body_entered(body):
-	if body.get_collision_layer_value(LayerManager.Layer.ASTEROID):
-		var _damage = (body as Asteroid).contact_damage
-		StatManager.set_health(StatManager.health - _damage)
-		if body.has_method("hit"):
-			hit_info.source = self
-			body.hit(hit_info)
+	if "contact_damage" in body:
+		StatManager.set_health(StatManager.health - body.contact_damage)
+
+	if body.has_method("hit"):
+		hit_info.source = self
+		body.hit(hit_info)
 
 func destroy():
 	is_destroyed = true
@@ -130,6 +130,9 @@ func destroy():
 	sprite.visible = false
 	plumes.visible = false
 	explosion.visible = true
+
+	$Area2D/CollisionPolygon2D.disabled = true
+	$CollisionPolygon2D.disabled = true
 
 	explosion.play("explosion")
 	explosion_sfx.play()

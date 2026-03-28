@@ -3,8 +3,6 @@ class_name Asteroid
 
 @export var child_asteroid_scene : PackedScene
 @export var hit_points : int
-@export var score_on_hit : int
-@export var max_extra_bonus : int
 @export var contact_damage : int
 @export var child_count: int
 @export var sprite_size : int
@@ -16,11 +14,15 @@ class_name Asteroid
 @onready var explosion : AnimatedSprite2D = $Explosion
 @onready var explosion_sfx : AudioStreamPlayer2D = $ExplosionSFX
 
+# score
+@export var score_on_hit : int
+@export var max_extra_bonus : int
+var destroy_extra_bonus : int
+
 var speed : float
 var movement_direction : Vector2
 var rotation_speed : float
 var dir_multiplier : int
-var destroy_extra_bonus : int
 
 var asteroid_container : Node2D
 var has_entered_screen : bool

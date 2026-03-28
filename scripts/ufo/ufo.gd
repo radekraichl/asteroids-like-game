@@ -2,10 +2,16 @@ class_name UFO
 extends CharacterBody2D
 
 @export var projectile_damage: int = 20
+@export var contact_damage: int  = 50
 @export var can_move: bool = true
 @export var speed_range: Vector2 = Vector2(90.0, 130.0)
 @export var turn_speed: float = 10.0
 @export var impact_color: Color = Color("ffe140")
+
+# score
+@export var score_on_hit : int = 450
+@export var max_extra_bonus : int = 90
+var destroy_extra_bonus : int
 
 @onready var health: Health = $Health
 @onready var body_collision: CollisionShape2D = $Body
@@ -13,7 +19,6 @@ extends CharacterBody2D
 @onready var _explosion_anim: AnimatedSprite2D = $ExplosionAnim
 @onready var _explosion_sfx: AudioStreamPlayer2D = $ExplosionSFX
 @onready var _ufo_sfx: AudioStreamPlayer2D = $UFOSFX
-
 @onready var _shield: Shield = $Shield
 
 var direction: Vector2 = Vector2.RIGHT
@@ -36,7 +41,10 @@ func _ready() -> void:
 	# setup shooting timer
 	_scheduler.add_event("shooting timer", 0.5, 1, _on_ufo_shooting_tick)
 	# setup shield timer
-	_scheduler.add_event("shield timer", 8, 10, _on_ufo_shield_tick, true)
+	#_scheduler.add_event("shield timer", 8, 10, _on_ufo_shield_tick, true)
+
+	# pick an extra bonus
+	destroy_extra_bonus = randi_range(0, max_extra_bonus)
 
 	_explosion_anim.visible = false
 	speed = speed_range.x
@@ -58,15 +66,23 @@ func _physics_process(delta: float) -> void:
 		move_and_collide(velocity * delta)
 
 func hit(hit_info: HitInfo) -> void:
-	# health
+	# projectile
 	if hit_info.source is Projectile:
+		# health
 		health.take_damage(projectile_damage)
 
-	# impact
-	var impact := missile_impact.instantiate()
-	impact.color = impact_color
-	impact.position = to_local(hit_info.position)
-	add_child(impact)
+		# score
+		StatManager.add_points(score_on_hit + destroy_extra_bonus)
+
+		# impact
+		var impact := missile_impact.instantiate()
+		impact.color = impact_color
+		impact.position = to_local(hit_info.position)
+		add_child(impact)
+
+	# ship
+	if hit_info.source is Ship:
+		health.take_damage(health.max_health)
 
 func set_shield_active_for(time: float) -> void:
 	_shield.activate_for(time)
