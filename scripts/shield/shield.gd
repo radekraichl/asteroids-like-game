@@ -9,6 +9,7 @@ extends AnimatedSprite2D
 @onready var _shield_sfx: AudioStreamPlayer2D = $ShieldSFX
 @onready var _collision_area: Area2D = $ShieldCollisionArea
 
+var is_active: bool = false
 var on_deactivated : Callable
 
 var missile_impact: PackedScene = preload("res://scenes/projectile/projectile_impact.tscn")
@@ -48,8 +49,9 @@ func _on_shield_timeout() -> void:
 	_shield_sfx.stop()
 
 func set_enabled(value: bool):
+	is_active = value
 	visible = value
-	collision_shape.disabled = not value
+	collision_shape.set_deferred("disabled", not value)
 
 func hit(hit_info: HitInfo):
 	var impact := missile_impact.instantiate()

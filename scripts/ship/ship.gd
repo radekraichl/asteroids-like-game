@@ -38,10 +38,11 @@ func _ready():
 	if center_screen_position:
 		position = Vector2(Setup.screen_width / 2, Setup.screen_height / 2)
 
-func _physics_process(delta):
+func _process(_delta: float) -> void:
 	if StatManager.health <= 0 and not is_destroyed:
 		destroy()
 
+func _physics_process(delta: float) -> void:
 	if is_destroyed:
 		return
 
@@ -98,13 +99,7 @@ func _physics_process(delta):
 
 	# shoot input
 	if Input.is_action_just_pressed("shoot"):
-		var projectile = projectile_scene.instantiate()
-		projectile.global_position = global_position + velocity * get_physics_process_delta_time()
-		projectile.speed += velocity.length()
-		projectile.global_rotation = global_rotation
-		get_parent().add_child(projectile)
-		projectile.disable_layer(LayerManager.Layer.PLAYER)
-		projectile_sfx.play()
+		_shoot()
 
 	# thrusting animation
 	if is_thrusting != was_thrusting:
@@ -113,6 +108,15 @@ func _physics_process(delta):
 		else:
 			plumes.play("idle")
 	was_thrusting = is_thrusting
+
+func _shoot() -> void:
+	var projectile = projectile_scene.instantiate()
+	projectile.global_position = global_position + velocity * get_physics_process_delta_time()
+	projectile.speed += velocity.length()
+	projectile.global_rotation = global_rotation
+	get_parent().add_child(projectile)
+	projectile.disable_layer(LayerManager.Layer.PLAYER)
+	projectile_sfx.play()
 
 func _on_area_2d_body_entered(body):
 	if "contact_damage" in body:

@@ -1,6 +1,9 @@
 class_name UFO
 extends CharacterBody2D
 
+const SHIELD_TIMER_NAME = "shield_timer"
+const SHOOTING_TIMER_NAME = "shooting_timer"
+
 @export var projectile_damage: int = 20
 @export var contact_damage: int  = 50
 @export var can_move: bool = true
@@ -20,6 +23,7 @@ var destroy_extra_bonus : int
 @onready var _explosion_sfx: AudioStreamPlayer2D = $ExplosionSFX
 @onready var _ufo_sfx: AudioStreamPlayer2D = $UFOSFX
 @onready var _shield: Shield = $Shield
+@onready var _ship: Ship = %Ship
 
 var direction: Vector2 = Vector2.RIGHT
 var speed: float
@@ -27,21 +31,22 @@ var target_direction: Vector2 = Vector2.RIGHT
 var target_speed: float
 
 var _scheduler := RandomEventScheduler.new()
+var _projectile_scene: PackedScene = preload("res://scenes/projectile/ufo_projectile.tscn")
 var missile_impact: PackedScene = preload("res://scenes/projectile/projectile_impact.tscn")
 
 func _ready() -> void:
-	_scheduler.name = "UFORandomEventScheduler"
-	add_child(_scheduler)
-
 	# play ufo sfx
 	_ufo_sfx.play()
 
+	# scheduler
+	_scheduler.name = "UFORandomEventScheduler"
+	add_child(_scheduler)
 	# setup movement timer
-	_scheduler.add_event("movement timer", 2, 4, _on_ufo_movement_tick, true)
+	_scheduler.add_event("movement timer", _on_ufo_movement_tick, 3, 6, true)
 	# setup shooting timer
-	_scheduler.add_event("shooting timer", 0.5, 1, _on_ufo_shooting_tick)
+	_scheduler.add_event(SHOOTING_TIMER_NAME, _on_ufo_shooting_tick, 2, 3, true)
 	# setup shield timer
-	#_scheduler.add_event("shield timer", 8, 10, _on_ufo_shield_tick, true)
+	_scheduler.add_event(SHIELD_TIMER_NAME, _on_ufo_shield_tick, 8, 10)
 
 	# pick an extra bonus
 	destroy_extra_bonus = randi_range(0, max_extra_bonus)
@@ -70,10 +75,8 @@ func hit(hit_info: HitInfo) -> void:
 	if hit_info.source is Projectile:
 		# health
 		health.take_damage(projectile_damage)
-
 		# score
 		StatManager.add_points(score_on_hit + destroy_extra_bonus)
-
 		# impact
 		var impact := missile_impact.instantiate()
 		impact.color = impact_color
@@ -88,34 +91,57 @@ func set_shield_active_for(time: float) -> void:
 	_shield.activate_for(time)
 	disable_collisions(true)
 
+## Disables UFO collisions
 func disable_collisions(value: bool):
-	body_collision.disabled = value
-	dome_collision.disabled = value
+	body_collision.set_deferred("disabled", value)
+	dome_collision.set_deferred("disabled", value)
 
 func _on_shield_deactivated() -> void:
 	disable_collisions(false)
 
 func _on_ufo_movement_tick() -> void:
-	var random_angle: float = randf_range(45, 60)
+	var random_angle: float = randf_range(60, 120)
 	if randf() > 0.5:
 		random_angle = -random_angle
 	target_direction = direction.rotated(deg_to_rad(random_angle))
 	target_speed = randf_range(speed_range.x, speed_range.y)
 
 func _on_ufo_shooting_tick() -> void:
-	pass
+	var min_time := 0.15
+	var max_time := 0.25
+
+	if !_scheduler.has_event("shoot"):
+		_scheduler.add_event("shoot", _on_ufo_shoot, min_time, max_time, false, 3)
+
+	_scheduler.set_interval("shoot", min_time, max_time, false, randi_range(2, 4))
+
+func _on_ufo_shoot() -> void:
+	if StatManager.health <= 0:
+		return
+	if _shield.is_active:
+		_scheduler.set_enabled("shoot", false)
+		return
+
+	var projectile = _projectile_scene.instantiate()
+	get_parent().add_child(projectile)
+	projectile.global_position = global_position + velocity * get_physics_process_delta_time()
+	projectile.speed += velocity.length()
+	var dir = (_ship.global_position - global_position).normalized()
+	projectile.rotation = Vector2.UP.angle_to(dir)
+	projectile.disable_layer(LayerManager.Layer.UFO)
 
 func _on_ufo_shield_tick() -> void:
 	set_shield_active_for(randf_range(3, 5))
 
 func _on_died():
+	_ufo_sfx.stop()
+	_scheduler.remove_event(SHIELD_TIMER_NAME)
+	_scheduler.remove_event(SHOOTING_TIMER_NAME)
 	can_move = false
 	disable_collisions(true)
 	_shield.set_enabled(false)
 	$Sprite2D.visible = false
 	_explosion_anim.visible = true
-
-	_ufo_sfx.stop()
 
 	_explosion_anim.play("explode")
 	_explosion_sfx.play()

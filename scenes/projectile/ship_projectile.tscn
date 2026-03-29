@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://cp8f44ulakgww"]
 
-[ext_resource type="Script" uid="uid://cohf02gqkp0vg" path="res://scripts/projectile/projectile.gd" id="1_0uoyr"]
-[ext_resource type="Texture2D" uid="uid://cvpo1x6u5a4jw" path="res://assets/projectile.png" id="1_cdnlh"]
-[ext_resource type="Shader" uid="uid://1jq6hug04ed4" path="res://scripts/glow.gdshader" id="2_lw0th"]
+[ext_resource type="Script" uid="uid://cohf02gqkp0vg" path="res://scripts/projectile/projectile.gd" id="1_y1474"]
+[ext_resource type="Shader" uid="uid://1jq6hug04ed4" path="res://scripts/glow.gdshader" id="2_jrquk"]
+[ext_resource type="Texture2D" uid="uid://cvpo1x6u5a4jw" path="res://assets/projectile.png" id="3_wcsek"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lw0th"]
-shader = ExtResource("2_lw0th")
-shader_parameter/glow_color = Color(1, 1, 1, 1)
+shader = ExtResource("2_jrquk")
+shader_parameter/glow_color = Color(0.25635225, 0.60873955, 0.9274734, 1)
 shader_parameter/glow_size = 7.000000285
 shader_parameter/glow_intensity = 0.9000000189999999
 shader_parameter/glow_falloff = 4.000000142499999
@@ -15,22 +15,26 @@ shader_parameter/glow_falloff = 4.000000142499999
 size = Vector2(2, 14)
 
 [node name="Projectile" type="CharacterBody2D" unique_id=620313389]
+z_index = -1
 collision_layer = 4
 collision_mask = 11
-script = ExtResource("1_0uoyr")
-color = Color(0.6841424, 0.81653786, 1, 1)
+script = ExtResource("1_y1474")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=883835974]
+self_modulate = Color(0.19136688, 0.57126963, 0.8551318, 1)
 texture_filter = 1
 material = SubResource("ShaderMaterial_lw0th")
-texture = ExtResource("1_cdnlh")
+texture = ExtResource("3_wcsek")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=565795100]
+visible = false
 shape = SubResource("RectangleShape2D_cdnlh")
 
 [node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier2D" parent="." unique_id=934467458]
+visible = false
 
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=512872678]
+visible = false
 position = Vector2(0, 7)
 target_position = Vector2(0, -14)
 collision_mask = 11

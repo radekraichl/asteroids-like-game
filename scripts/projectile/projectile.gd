@@ -3,7 +3,6 @@ extends CharacterBody2D
 
 @export var speed: float = 600.0
 @export var bonus_speed: float = 0.0
-@export var color: Color = Color("ffffff")
 @export var raycast_length: float = 14.0
 
 @onready var sprite: Sprite2D = $Sprite
@@ -16,8 +15,6 @@ var hit_info: HitInfo = HitInfo.new()
 func _ready() -> void:
 	_raycast.collide_with_areas = true
 	on_screen_notifier.visible = true
-	sprite.modulate = color
-	shader.set_shader_parameter("glow_color", color)
 
 func _physics_process(delta):
 	velocity = Vector2.UP.rotated(rotation) * speed

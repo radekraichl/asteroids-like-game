@@ -1,12 +1,12 @@
 extends Node2D
 
-@export var far_factor  := 0.1
-@export var mid_factor  := 0.2
-@export var near_factor := 0.3
+@export var far_factor: float = 0.1
+@export var mid_factor: float = 0.2
+@export var near_factor: float = 0.3
 
-@onready var far  := $Parallax2DFar
-@onready var mid  := $Parallax2DMid
-@onready var near  := $Parallax2DNear
+@onready var far := $Parallax2DFar
+@onready var mid := $Parallax2DMid
+@onready var near := $Parallax2DNear
 
 @onready var _ship: CharacterBody2D = %Ship
 
