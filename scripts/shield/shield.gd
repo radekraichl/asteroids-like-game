@@ -1,7 +1,9 @@
 class_name Shield
 extends AnimatedSprite2D
 
-@export var score_on_hit : int = 5
+@export var score_on_hit: int = 5
+@export var max_extra_bonus: int = 5
+@export var damage_on_hit: int = 1
 @export var shield_color: Color = Color("0f73d2ff")
 @export var impact_color: Color = Color("1c8ffdff")
 @export var particles_color: Color = Color("41a2ffff")
@@ -9,6 +11,7 @@ extends AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = %CollisionShape
 @onready var _shield_sfx: AudioStreamPlayer2D = $ShieldSFX
 @onready var _collision_area: Area2D = $ShieldCollisionArea
+@onready var _health: Health = $"../Health"
 
 var is_active: bool = false
 var on_deactivated : Callable
@@ -63,8 +66,12 @@ func hit(hit_info: HitInfo):
 	impact.position = compensated_pos
 	add_child(impact)
 
+	# pick an extra bonus
+	var extra_bonus := randi_range(0, max_extra_bonus)
 	# set score
-	StatManager.add_points(score_on_hit)
+	StatManager.add_points(score_on_hit + extra_bonus)
+	# health
+	_health.take_damage(damage_on_hit)
 
 func _on_area_entered(area: Area2D):
 	if area.get_collision_layer_value(LayerManager.Layer.PLAYER):

@@ -16,7 +16,7 @@ const SHOOTING_TIMER_NAME = "shooting_timer"
 @export var max_extra_bonus : int = 90
 
 @onready var _ship: Ship = %Ship
-@onready var health: Health = $Health
+@onready var _health: Health = $Health
 @onready var body_collision: CollisionShape2D = $Body
 @onready var dome_collision: CollisionShape2D = $Dome
 @onready var _explosion_anim: AnimatedSprite2D = $ExplosionAnim
@@ -49,15 +49,15 @@ func _ready() -> void:
 	# setup shooting timer
 	_scheduler.add_event(SHOOTING_TIMER_NAME, _on_ufo_shooting_tick, 2, 3, true)
 	# setup shield timer
-	_scheduler.add_event(SHIELD_TIMER_NAME, _on_ufo_shield_tick, 8, 10)
+	_scheduler.add_event(SHIELD_TIMER_NAME, _on_ufo_shield_tick, 8, 10, true)
 
 	_explosion_anim.visible = false
 	speed = speed_range.x
 	target_speed = speed_range.x
 
 	# helath callback
-	health.died.connect(_on_died)
-	health.health_changed.connect(_on_health_changed)
+	_health.died.connect(_on_died)
+	_health.health_changed.connect(_on_health_changed)
 
 	# shield deactivated callback
 	_shield.on_deactivated = _on_shield_deactivated
@@ -79,9 +79,11 @@ func hit(hit_info: HitInfo) -> void:
 	# projectile
 	if hit_info.source is Projectile:
 		# health
-		health.take_damage(hit_info.damage)
+		_health.take_damage(hit_info.damage)
+
 		# score
 		StatManager.add_points(score_on_hit + extra_bonus)
+
 		# impact
 		var impact := missile_impact.instantiate()
 		impact.color = impact_color
@@ -90,8 +92,8 @@ func hit(hit_info: HitInfo) -> void:
 
 	# ship
 	if hit_info.source is Ship:
-		# healt
-		health.take_damage(health.max_health)
+		# health
+		_health.take_damage(_health.max_health)
 		# score
 		StatManager.add_points((int)(score_on_hit / 4.0 + extra_bonus / 4.0))
 
