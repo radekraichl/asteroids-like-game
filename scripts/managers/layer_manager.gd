@@ -1,7 +1,7 @@
 extends Node
 
 enum Layer {
-	PLAYER = 1,
+	SHIP = 1,
 	ASTEROID = 2,
 	PROJECTILE = 3,
 	UFO = 4

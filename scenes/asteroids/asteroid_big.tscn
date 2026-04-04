@@ -82,7 +82,7 @@ max_extra_bonus = 30
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1255030340]
-z_index = 100
+z_index = 1
 texture = ExtResource("3_wwicn")
 hframes = 4
 

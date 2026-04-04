@@ -1,6 +1,7 @@
 class_name Shield
 extends AnimatedSprite2D
 
+@export var can_play_sfx: bool = true
 @export var score_on_hit: int = 5
 @export var max_extra_bonus: int = 5
 @export var damage_on_hit: int = 1
@@ -40,7 +41,8 @@ func activate_for(time: float) -> void:
 	set_enabled(true)
 
 	# play SFX
-	_shield_sfx.play()
+	if can_play_sfx:
+		_shield_sfx.play()
 
 func _on_shield_timeout() -> void:
 	set_enabled(false)

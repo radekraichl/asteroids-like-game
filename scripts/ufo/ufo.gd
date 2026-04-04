@@ -7,6 +7,7 @@ const SHOOTING_TIMER_NAME = "shooting_timer"
 @export var contact_damage: int  = 60
 @export var can_move: bool = true
 @export var can_shoot: bool = true
+@export var can_play_sfx: bool = true
 @export var speed_range: Vector2 = Vector2(90.0, 130.0)
 @export var turn_speed: float = 10.0
 @export var impact_color: Color = Color("ffe140")
@@ -15,10 +16,12 @@ const SHOOTING_TIMER_NAME = "shooting_timer"
 @export var score_on_hit : int = 450
 @export var max_extra_bonus : int = 90
 
-@onready var _ship: Ship = %Ship
-@onready var _health: Health = $Health
+# collisions
 @onready var body_collision: CollisionShape2D = $Body
 @onready var dome_collision: CollisionShape2D = $Dome
+
+@onready var _ship: Ship = %Ship
+@onready var _health: Health = $Health
 @onready var _explosion_anim: AnimatedSprite2D = $ExplosionAnim
 @onready var _shield: Shield = $Shield
 @onready var _wrap: Wrap = $Wrap
@@ -39,7 +42,8 @@ var missile_impact: PackedScene = preload("res://scenes/projectile/projectile_im
 
 func _ready() -> void:
 	# play ufo sfx
-	_ufo_sfx.play()
+	if can_play_sfx:
+		_ufo_sfx.play()
 
 	# scheduler
 	_scheduler.name = "UFORandomEventScheduler"
@@ -97,6 +101,7 @@ func hit(hit_info: HitInfo) -> void:
 		# score
 		StatManager.add_points((int)(score_on_hit / 4.0 + extra_bonus / 4.0))
 
+## Activates the shield for the specified duration and disables collisions
 func set_shield_active_for(time: float) -> void:
 	_shield.activate_for(time)
 	disable_collisions(true)

@@ -30,7 +30,7 @@ var angular_velocity: float = 0.0
 @onready var projectile_sfx : AudioStreamPlayer2D = $ProjectileSFX
 
 # health
-@onready var _health: Health = $Health
+@onready var health: Health = $Health
 
 var hit_info : HitInfo = HitInfo.new()
 
@@ -39,11 +39,12 @@ func _ready():
 	if center_screen_position:
 		position = Vector2(Setup.screen_width / 2, Setup.screen_height / 2)
 
-	_health.health_changed.connect(_on_health_changed)
-	_health.died.connect(destroy)
+	health.died.connect(destroy)
+	health.health_changed.connect(_on_health_changed)
+	_on_health_changed(health.current_health)
 
 func _physics_process(delta: float) -> void:
-	if _health.is_dead():
+	if health.is_dead():
 		return
 
 	# input
@@ -115,7 +116,7 @@ func _shoot() -> void:
 	projectile.speed += velocity.length()
 	projectile.global_rotation = global_rotation
 	get_parent().add_child(projectile)
-	projectile.disable_layer(LayerManager.Layer.PLAYER)
+	projectile.disable_layer(LayerManager.Layer.SHIP)
 	projectile_sfx.play()
 
 func _on_area_2d_body_entered(body) -> void:
@@ -129,7 +130,7 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 
 func _handle_contact(object) -> void:
 	if "contact_damage" in object:
-		_health.take_damage(object.contact_damage)
+		health.take_damage(object.contact_damage)
 
 func _on_health_changed(_current_hp):
 	StatManager.set_health(_current_hp)

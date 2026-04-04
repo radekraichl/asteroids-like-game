@@ -159,6 +159,7 @@ wrap_margin = 8.0
 
 [node name="Health" type="Node" parent="." unique_id=1821139359]
 script = ExtResource("4_37jfo")
+current_health = 20
 metadata/_custom_type_script = "uid://bovhliyr7f8m7"
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1844707874]

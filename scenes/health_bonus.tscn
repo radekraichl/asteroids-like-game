@@ -1,7 +1,15 @@
 [gd_scene format=3 uid="uid://l7d2n64m3ebg"]
 
 [ext_resource type="Script" uid="uid://lvrskocj52e4" path="res://scripts/wrap.gd" id="1_cu8pv"]
+[ext_resource type="Script" uid="uid://bbxdg5xdkkfcm" path="res://scripts/health_bonus.gd" id="1_pd7rf"]
 [ext_resource type="Texture2D" uid="uid://d1lp4t2nfpvmq" path="res://assets/health_bonus.png" id="1_xoe3d"]
+[ext_resource type="AudioStream" uid="uid://bi8rt6g262l2u" path="res://assets/sfx/health_bonus.wav" id="2_t1fe4"]
+[ext_resource type="Script" uid="uid://bngocyu2waci6" path="res://scripts/space_movement.gd" id="3_n6kr8"]
+[ext_resource type="Texture2D" uid="uid://c41i5mst6l6da" path="res://assets/health_bonus_particle.png" id="6_8asgw"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t1fe4"]
+radius = 13.0
+height = 26.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cu8pv"]
 atlas = ExtResource("1_xoe3d")
@@ -127,16 +135,55 @@ animations = [{
 }],
 "loop": true,
 "name": &"health_bonus_anim",
-"speed": 32.0
+"speed": 24.0
 }]
 
+[sub_resource type="Curve" id="Curve_8asgw"]
+_data = [Vector2(0, 1), 0.0, 1.4210597, 0, 0, Vector2(1, 0), -6.832716, 0.0, 0, 0]
+point_count = 2
+
 [node name="HelathBonus" type="Node2D" unique_id=1286018886]
+script = ExtResource("1_pd7rf")
+heal_bonus = 70
+sfx = ExtResource("2_t1fe4")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1475557028]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=140807966]
+shape = SubResource("CapsuleShape2D_t1fe4")
 
 [node name="Wrap" type="Node" parent="." unique_id=836712399]
 script = ExtResource("1_cu8pv")
 metadata/_custom_type_script = "uid://lvrskocj52e4"
 
 [node name="Animation" type="AnimatedSprite2D" parent="." unique_id=1618007502]
+z_index = 10
 sprite_frames = SubResource("SpriteFrames_jhxof")
 animation = &"health_bonus_anim"
 autoplay = "health_bonus_anim"
+
+[node name="SpaceMovement" type="Node2D" parent="." unique_id=1626180580]
+script = ExtResource("3_n6kr8")
+speed_range = Vector2(50, 80)
+direction = Vector2(1, 1.5)
+
+[node name="Particles" type="CPUParticles2D" parent="." unique_id=2024069346]
+emitting = false
+amount = 15
+texture = ExtResource("6_8asgw")
+lifetime = 0.8
+explosiveness = 1.0
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 40.0
+initial_velocity_max = 60.0
+angular_velocity_max = 100.0
+orbit_velocity_max = 0.1
+damping_max = 20.0
+scale_amount_max = 1.2
+scale_amount_curve = SubResource("Curve_8asgw")
+color = Color(0.5460356, 0.12219535, 0.12219535, 1)
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
