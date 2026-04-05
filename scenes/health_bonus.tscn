@@ -3,9 +3,11 @@
 [ext_resource type="Script" uid="uid://lvrskocj52e4" path="res://scripts/wrap.gd" id="1_cu8pv"]
 [ext_resource type="Script" uid="uid://bbxdg5xdkkfcm" path="res://scripts/health_bonus.gd" id="1_pd7rf"]
 [ext_resource type="Texture2D" uid="uid://d1lp4t2nfpvmq" path="res://assets/health_bonus.png" id="1_xoe3d"]
-[ext_resource type="AudioStream" uid="uid://bi8rt6g262l2u" path="res://assets/sfx/health_bonus.wav" id="2_t1fe4"]
+[ext_resource type="AudioStream" uid="uid://cojqgho8amnc6" path="res://assets/sfx/health_bonus.wav" id="2_t1fe4"]
 [ext_resource type="Script" uid="uid://bngocyu2waci6" path="res://scripts/space_movement.gd" id="3_n6kr8"]
+[ext_resource type="Script" uid="uid://bovhliyr7f8m7" path="res://scripts/health.gd" id="3_sa8sl"]
 [ext_resource type="Texture2D" uid="uid://c41i5mst6l6da" path="res://assets/health_bonus_particle.png" id="6_8asgw"]
+[ext_resource type="Texture2D" uid="uid://csrqgps6ampmr" path="res://assets/vfx/bonus_explosion.png" id="8_66v34"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t1fe4"]
 radius = 13.0
@@ -139,51 +141,155 @@ animations = [{
 }]
 
 [sub_resource type="Curve" id="Curve_8asgw"]
-_data = [Vector2(0, 1), 0.0, 1.4210597, 0, 0, Vector2(1, 0), -6.832716, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 1.4210597, 0, 0, Vector2(0.83629894, 0), -6.832716, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n6dkt"]
+atlas = ExtResource("8_66v34")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oc1vg"]
+atlas = ExtResource("8_66v34")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6xqke"]
+atlas = ExtResource("8_66v34")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rqk15"]
+atlas = ExtResource("8_66v34")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w15s1"]
+atlas = ExtResource("8_66v34")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwhwx"]
+atlas = ExtResource("8_66v34")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0c1ed"]
+atlas = ExtResource("8_66v34")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jyeu4"]
+atlas = ExtResource("8_66v34")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0j3bf"]
+atlas = ExtResource("8_66v34")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6r4j"]
+atlas = ExtResource("8_66v34")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fhpjq"]
+atlas = ExtResource("8_66v34")
+region = Rect2(128, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e7ete"]
+atlas = ExtResource("8_66v34")
+region = Rect2(160, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cqn81"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n6dkt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oc1vg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xqke")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rqk15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w15s1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kwhwx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0c1ed")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jyeu4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0j3bf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t6r4j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fhpjq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e7ete")
+}],
+"loop": false,
+"name": &"default",
+"speed": 16.0
+}]
 
 [node name="HelathBonus" type="Node2D" unique_id=1286018886]
 script = ExtResource("1_pd7rf")
-heal_bonus = 70
 sfx = ExtResource("2_t1fe4")
-
-[node name="Area2D" type="Area2D" parent="." unique_id=1475557028]
-visible = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=140807966]
-shape = SubResource("CapsuleShape2D_t1fe4")
 
 [node name="Wrap" type="Node" parent="." unique_id=836712399]
 script = ExtResource("1_cu8pv")
 metadata/_custom_type_script = "uid://lvrskocj52e4"
 
-[node name="Animation" type="AnimatedSprite2D" parent="." unique_id=1618007502]
+[node name="Health" type="Node" parent="." unique_id=1364588050]
+script = ExtResource("3_sa8sl")
+current_health = 20
+metadata/_custom_type_script = "uid://bovhliyr7f8m7"
+
+[node name="CollisionArea" type="Area2D" parent="." unique_id=1475557028]
+visible = false
+collision_layer = 16
+
+[node name="CollisionShape" type="CollisionShape2D" parent="CollisionArea" unique_id=140807966]
+shape = SubResource("CapsuleShape2D_t1fe4")
+
+[node name="BonusSpriteAnim" type="AnimatedSprite2D" parent="." unique_id=1618007502]
 z_index = 10
 sprite_frames = SubResource("SpriteFrames_jhxof")
 animation = &"health_bonus_anim"
 autoplay = "health_bonus_anim"
 
 [node name="SpaceMovement" type="Node2D" parent="." unique_id=1626180580]
+visible = false
 script = ExtResource("3_n6kr8")
+can_move = false
 speed_range = Vector2(50, 80)
 direction = Vector2(1, 1.5)
 
 [node name="Particles" type="CPUParticles2D" parent="." unique_id=2024069346]
-emitting = false
 amount = 15
 texture = ExtResource("6_8asgw")
-lifetime = 0.8
+lifetime = 0.5
 explosiveness = 1.0
 direction = Vector2(0, 0)
 spread = 180.0
 gravity = Vector2(0, 0)
-initial_velocity_min = 40.0
-initial_velocity_max = 60.0
+initial_velocity_min = 80.0
+initial_velocity_max = 100.0
 angular_velocity_max = 100.0
 orbit_velocity_max = 0.1
 damping_max = 20.0
-scale_amount_max = 1.2
+scale_amount_max = 2.0
 scale_amount_curve = SubResource("Curve_8asgw")
 color = Color(0.5460356, 0.12219535, 0.12219535, 1)
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[node name="ExplosionAnim" type="AnimatedSprite2D" parent="." unique_id=1781639371]
+self_modulate = Color(0.6381068, 0.17293487, 0.121817045, 1)
+sprite_frames = SubResource("SpriteFrames_cqn81")
+frame = 11
+frame_progress = 1.0
+
+[connection signal="area_entered" from="CollisionArea" to="." method="_on_area_2d_area_entered"]

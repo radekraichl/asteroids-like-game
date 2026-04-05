@@ -28,9 +28,12 @@ func _physics_process(delta):
 		hit_info.position = _raycast.get_collision_point()
 		hit_info.velocity = velocity
 		hit_info.source = self
+
 		var object = _raycast.get_collider()
-		if object.has_method("hit"):
-			object.hit(hit_info)
+		var target = object if object.has_method("hit") else object.get_parent()
+		if target.has_method("hit"):
+			target.hit(hit_info)
+
 		queue_free()
 		return
 
