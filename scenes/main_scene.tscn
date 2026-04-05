@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://c06fx4od62njj" path="res://scripts/background/starfield_generator.gd" id="1_to7gp"]
 [ext_resource type="Script" uid="uid://veeu7hiraxc1" path="res://scripts/background/background.gd" id="1_u0fll"]
 [ext_resource type="FontFile" uid="uid://2xh1s6462lgr" path="res://assets/ari_w9500/ari-w9500-condensed-display.ttf" id="2_c16ls"]
-[ext_resource type="Theme" uid="uid://cdqg5vqnwecyx" path="res://ui_theme.tres" id="3_7nt27"]
+[ext_resource type="Theme" uid="uid://cdqg5vqnwecyx" path="res://resources/ui_theme.tres" id="3_7nt27"]
 [ext_resource type="Script" uid="uid://td5o3in76l7v" path="res://scripts/gui/pause_menu.gd" id="4_xdqt8"]
 [ext_resource type="Texture2D" uid="uid://dgxvxu8iiohx8" path="res://assets/health_bar_bg.png" id="5_4w45t"]
 [ext_resource type="Texture2D" uid="uid://bjltt50f68alq" path="res://assets/health_bar.png" id="5_e1cbu"]
@@ -20,8 +20,8 @@
 [ext_resource type="Script" uid="uid://dqqw5cpwf1cd1" path="res://scripts/gui/fade_panel.gd" id="12_k3g67"]
 [ext_resource type="Script" uid="uid://va2o05eat8pu" path="res://scripts/gui/game_over.gd" id="15_58gk3"]
 [ext_resource type="PackedScene" uid="uid://oqbv7cng5h6" path="res://scenes/ship/ship.tscn" id="18_xdqt8"]
+[ext_resource type="PackedScene" uid="uid://ieyqnnvsdhg6" path="res://scenes/ufo/ufo.tscn" id="22_58gk3"]
 [ext_resource type="PackedScene" uid="uid://l7d2n64m3ebg" path="res://scenes/health_bonus.tscn" id="22_adb74"]
-[ext_resource type="PackedScene" uid="uid://ieyqnnvsdhg6" path="res://scenes/ufo/ufo.tscn" id="27_k67gn"]
 
 [sub_resource type="GDScript" id="GDScript_rt2n2"]
 script/source = "extends Camera2D
@@ -313,14 +313,11 @@ asteroid_scene = ExtResource("10_e1cbu")
 [node name="AsteroidContainer" type="Node2D" parent="." unique_id=1217039606]
 unique_name_in_owner = true
 
-[node name="UFO" parent="." unique_id=1375694361 instance=ExtResource("27_k67gn")]
-position = Vector2(254, 262)
-can_move = true
-can_shoot = true
-can_play_sfx = true
-
 [node name="Node2D" parent="." unique_id=1286018886 instance=ExtResource("22_adb74")]
 position = Vector2(491, 109)
+
+[node name="UFO" parent="." unique_id=1375694361 instance=ExtResource("22_58gk3")]
+position = Vector2(321, 212)
 
 [connection signal="pressed" from="PauseMenu/MenuRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseMenu/MenuRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SettingsButton" to="PauseMenu" method="_on_settings_button_pressed"]

@@ -9,9 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://ck7ljptxm1sse" path="res://assets/ufo_shield.png" id="7_5w6k5"]
 [ext_resource type="Shader" uid="uid://1jq6hug04ed4" path="res://assets/glow.gdshader" id="7_lan7f"]
 [ext_resource type="Script" uid="uid://dawg0e58u67e0" path="res://scripts/shield/shield.gd" id="7_tkk3j"]
-[ext_resource type="AudioStream" uid="uid://btmtkxjoulkkq" path="res://assets/sfx/ufo_sfx.wav" id="7_ujrry"]
 [ext_resource type="Script" uid="uid://ypyo5p6sqvns" path="res://scripts/shield/shield_collision_area.gd" id="8_ai8vk"]
-[ext_resource type="AudioStream" uid="uid://iybqb7a3i1yy" path="res://assets/sfx/shield_sfx.mp3" id="11_5rfrm"]
+[ext_resource type="AudioStream" uid="uid://jx52ayvw4gnv" path="res://assets/sfx/shield_sfx.wav" id="10_bynug"]
+[ext_resource type="AudioStream" uid="uid://btmtkxjoulkkq" path="res://assets/sfx/ufo_sfx.wav" id="11_bynug"]
 [ext_resource type="AudioStream" uid="uid://muaka5wtxhmh" path="res://assets/sfx/ufo_projectile_sfx.wav" id="13_bynug"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k3g67"]
@@ -121,9 +121,6 @@ height = 52.0
 [node name="UFO" type="CharacterBody2D" unique_id=1375694361]
 collision_layer = 8
 script = ExtResource("1_gp6nc")
-can_move = false
-can_shoot = false
-can_play_sfx = false
 turn_speed = 8.0
 score_on_hit = 300
 max_extra_bonus = 40
@@ -175,11 +172,11 @@ rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_tkk3j")
 
 [node name="ShieldSFX" type="AudioStreamPlayer2D" parent="Shield" unique_id=327854985]
-stream = ExtResource("11_5rfrm")
+stream = ExtResource("10_bynug")
 bus = &"SFX"
 
 [node name="UFOSFX" type="AudioStreamPlayer2D" parent="." unique_id=1856908511]
-stream = ExtResource("7_ujrry")
+stream = ExtResource("11_bynug")
 bus = &"SFX"
 area_mask = 8
 
