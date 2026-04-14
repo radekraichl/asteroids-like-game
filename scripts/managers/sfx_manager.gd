@@ -39,7 +39,7 @@ func play_2d(stream: AudioStream, position: Vector2, volume_db := 0.0, pitch := 
 	return player
 
 ## Plays a 2D sound with randomized pitch — prevents repetitive sounds from feeling robotic
-func play_varied(stream: AudioStream, position: Vector2,
+func play_varied_2d(stream: AudioStream, position: Vector2,
 		pitch_min := 0.9, pitch_max := 1.1, volume_db := 0.0) -> AudioStreamPlayer2D:
 	if stream == null:
 		push_warning("SfxManager.play_varied: stream is null, skipping playback")

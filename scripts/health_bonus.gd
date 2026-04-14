@@ -8,6 +8,7 @@ const HIT_PENALTY = 5
 @export var heal_sfx: AudioStream
 @export var explosion_sfx: AudioStream
 
+@onready var _movement: SpaceMovement = $SpaceMovement
 @onready var _particles: CPUParticles2D = $Particles
 @onready var _health: Health = $Health
 @onready var _collision: CollisionShape2D = $CollisionArea/CollisionShape
@@ -41,7 +42,7 @@ func _ready() -> void:
 	_health.died.connect(_on_died)
 	_health.health_changed.connect(_on_health_changed)
 
-func _on_health_changed(new_health: int):
+func _on_health_changed(_new_health: int):
 	var damaged: bool = _health.get_health_percentage() <= 50
 	_sprite.frame = 1 if damaged else 0
 
@@ -57,6 +58,7 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 
 func _on_died() -> void:
 	disable()
+	_movement.can_move = false
 	SfxManager.play_2d(explosion_sfx, global_position, 14)
 	_explosion_anim.play()
 	await _explosion_anim.animation_finished

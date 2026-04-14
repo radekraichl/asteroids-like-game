@@ -11,7 +11,7 @@ func set_new_score(new_score: int):
 	if new_score == 0:
 		displayed_score = new_score
 		return
-		
+
 	if tween:
 		tween.kill()
 

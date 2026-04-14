@@ -117,7 +117,7 @@ func _shoot() -> void:
 	projectile.global_rotation = global_rotation
 	get_parent().add_child(projectile)
 	projectile.disable_layer(LayerManager.Layer.SHIP)
-	SfxManager.play_2d(projectile_sfx, global_position)
+	SfxManager.play_varied_2d(projectile_sfx, global_position, 1.0, 1.2)
 
 func _on_area_2d_body_entered(body) -> void:
 	_handle_contact(body)

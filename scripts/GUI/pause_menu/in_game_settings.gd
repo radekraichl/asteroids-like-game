@@ -1,7 +1,7 @@
 extends Control
 
 @onready var sfx_button : CheckButton = %SFX
-@onready var pause_menu : CanvasLayer = %PauseMenu
+@onready var pause_menu : CanvasLayer = $".."
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_WHEN_PAUSED

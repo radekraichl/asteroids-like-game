@@ -37,6 +37,7 @@ func set_screen(screen : Screen):
 			show()
 
 			if fade_panel.get_state() == fade_panel.FadeState.CLEAR:
+				print("fade")
 				fade_panel.fade_in()
 
 			menu_root.show()
@@ -63,7 +64,7 @@ func _unhandled_input(event):
 	if not event.is_action_pressed("ui_cancel"):
 		return
 
-	# back one level when pressing ESC key
+	# enter pause menu or back one level when pressing ESC key
 	match current_screen:
 		Screen.NONE:
 			set_screen(Screen.PAUSED)

@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://bovhliyr7f8m7" path="res://scripts/health.gd" id="4_37jfo"]
 [ext_resource type="Texture2D" uid="uid://cpj1wx1nvj7ju" path="res://assets/rocket_plumes_small.png" id="5_8ks32"]
 [ext_resource type="Texture2D" uid="uid://bbhvcnmw8v4f3" path="res://assets/rocket_plumes_big.png" id="6_itjdq"]
-[ext_resource type="Texture2D" uid="uid://c041nfpmb8fys" path="res://assets/explosion_ship.png" id="7_roibb"]
+[ext_resource type="Texture2D" uid="uid://c041nfpmb8fys" path="res://assets/vfx/explosion_ship.png" id="7_roibb"]
 [ext_resource type="AudioStream" uid="uid://da8q0qwjp4aqv" path="res://assets/sfx/ship_explosion_sfx.wav" id="8_wkb1m"]
 [ext_resource type="AudioStream" uid="uid://ccq5rq58114g" path="res://assets/sfx/projectile_sfx.wav" id="9_r75st"]
 

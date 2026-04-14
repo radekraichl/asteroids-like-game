@@ -15,17 +15,20 @@ func _ready() -> void:
 func get_state() -> FadeState:
 	return _state
 
+func set_faded() -> void:
+	_kill_tween()
+	self_modulate.a = 1.0
+	visible = true
+	_state = FadeState.FADED
+
 func fade_in(duration: float = -1.0) -> void:
 	if duration <= 0.0:
 		duration = fade_duration
-
 	_kill_tween()
 	_state = FadeState.FADING
 	visible = true
-	modulate.a = 0.0
-
 	_tween = create_tween()
-	_tween.tween_property(self, "modulate:a", 1.0, duration)
+	_tween.tween_property(self, "self_modulate:a", 1.0, duration)
 	_tween.finished.connect(func():
 		fade_finished.emit()
 		_state = FadeState.FADED
@@ -34,12 +37,10 @@ func fade_in(duration: float = -1.0) -> void:
 func fade_out(duration: float = -1.0) -> void:
 	if duration <= 0.0:
 		duration = fade_duration
-
 	_kill_tween()
 	_state = FadeState.FADING
-
 	_tween = create_tween()
-	_tween.tween_property(self, "modulate:a", 0.0, duration)
+	_tween.tween_property(self, "self_modulate:a", 0.0, duration)
 	_tween.finished.connect(func():
 		visible = false
 		fade_finished.emit()

@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://puwngnwhi1x1"]
+
+[ext_resource type="Script" uid="uid://dt3ckcyhmcxdy" path="res://scripts/fsm/state_machine.gd" id="1_jl0ue"]
+[ext_resource type="Script" uid="uid://dqqw5cpwf1cd1" path="res://scripts/gui/fade_panel.gd" id="1_v87vn"]
+[ext_resource type="Script" uid="uid://calqqj3ghpfrn" path="res://scripts/gui/main_menu/main_menu_state.gd" id="1_xbu81"]
+[ext_resource type="AudioStream" uid="uid://b7s3wni4s4u5s" path="res://assets/sfx/button_focus.ogg" id="3_x41oi"]
+[ext_resource type="Script" uid="uid://r73kvvbjusru" path="res://scripts/gui/main_menu/settings_menu_state.gd" id="3_yx4et"]
+[ext_resource type="Theme" uid="uid://dhb0it06blrhy" path="res://resources/main_menu_theme.tres" id="4_pgo4t"]
+
+[node name="MainMenu" type="CanvasLayer" unique_id=1462006230]
+
+[node name="MenuStateManager" type="Node" parent="." unique_id=1056132251 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("1_jl0ue")
+initial_state = NodePath("MainMenuState")
+
+[node name="MainMenuState" type="Node" parent="MenuStateManager" unique_id=840005553]
+script = ExtResource("1_xbu81")
+button_focus_sfx = ExtResource("3_x41oi")
+
+[node name="SettingsMenuState" type="Node" parent="MenuStateManager" unique_id=1047760167]
+script = ExtResource("3_yx4et")
+
+[node name="FadePanel" type="ColorRect" parent="MenuStateManager" unique_id=104279483]
+unique_name_in_owner = true
+z_index = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("1_v87vn")
+metadata/_custom_type_script = "uid://dqqw5cpwf1cd1"
+
+[node name="MainMenuControl" type="Control" parent="." unique_id=1012968457]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("4_pgo4t")
+
+[node name="CenterContainer" type="CenterContainer" parent="MainMenuControl" unique_id=1391832214]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenuControl/CenterContainer" unique_id=1577833237]
+layout_mode = 2
+
+[node name="NewGameButton" type="Button" parent="MainMenuControl/CenterContainer/VBoxContainer" unique_id=383179447]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("4_pgo4t")
+text = "New Game"
+
+[node name="ExitButton" type="Button" parent="MainMenuControl/CenterContainer/VBoxContainer" unique_id=191775801]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Exit"

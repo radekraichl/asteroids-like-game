@@ -1,10 +1,13 @@
 [gd_resource type="Theme" format=3 uid="uid://cdqg5vqnwecyx"]
 
-[ext_resource type="FontFile" uid="uid://2xh1s6462lgr" path="res://assets/ari_w9500/ari-w9500-condensed-display.ttf" id="1_touxu"]
 [ext_resource type="Texture2D" uid="uid://8p8xohuq178k" path="res://assets/menu_bg.png" id="2_2pn01"]
-[ext_resource type="FontFile" uid="uid://dxb4oioc3ggja" path="res://assets/ari_w9500/ari-w9500-display.ttf" id="3_mk0s6"]
+[ext_resource type="FontFile" uid="uid://dxb4oioc3ggja" path="res://assets/font/ari-w9500-display.ttf" id="3_mk0s6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbeor"]
+content_margin_left = 18.0
+content_margin_top = 1.0
+content_margin_right = 18.0
+content_margin_bottom = 6.0
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_left = 2
 border_width_top = 2
@@ -16,73 +19,68 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 corner_detail = 16
-expand_margin_left = 8.0
-expand_margin_top = 2.0
-expand_margin_right = 8.0
-expand_margin_bottom = 2.0
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2pn01"]
+content_margin_left = 18.0
+content_margin_top = 1.0
+content_margin_right = 18.0
+content_margin_bottom = 6.0
 bg_color = Color(0.16862746, 0.19215687, 0.2784314, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 corner_detail = 16
-expand_margin_left = 8.0
-expand_margin_top = 2.0
-expand_margin_right = 8.0
-expand_margin_bottom = 2.0
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_touxu"]
-bg_color = Color(0.21568628, 0.25882354, 0.32156864, 1)
-border_color = Color(1, 1, 1, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yl303"]
+content_margin_left = 18.0
+content_margin_top = 1.0
+content_margin_right = 18.0
+content_margin_bottom = 6.0
+bg_color = Color(0.22076263, 0.2361144, 0.3290106, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
-corner_detail = 16
-expand_margin_left = 8.0
-expand_margin_top = 2.0
-expand_margin_right = 8.0
-expand_margin_bottom = 2.0
-anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mk0s6"]
+content_margin_left = 18.0
+content_margin_top = 1.0
+content_margin_right = 18.0
+content_margin_bottom = 6.0
 bg_color = Color(0.11372549, 0.1254902, 0.16078432, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 corner_detail = 16
-expand_margin_left = 6.0
-expand_margin_right = 6.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tpf0h"]
-bg_color = Color(0.16862746, 0.19215687, 0.2784314, 1)
+content_margin_left = 18.0
+content_margin_top = 1.0
+content_margin_right = 18.0
+content_margin_bottom = 6.0
+bg_color = Color(0.21960784, 0.23529412, 0.32941177, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 corner_detail = 16
-expand_margin_left = 8.0
-expand_margin_top = 2.0
-expand_margin_right = 8.0
-expand_margin_bottom = 2.0
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5kxjo"]
-bg_color = Color(0.21568628, 0.25882354, 0.32156864, 1)
+content_margin_left = 18.0
+content_margin_top = 1.0
+content_margin_right = 18.0
+content_margin_bottom = 6.0
+bg_color = Color(0.21960784, 0.23529412, 0.32941177, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 corner_detail = 16
-expand_margin_left = 8.0
-expand_margin_top = 2.0
-expand_margin_right = 8.0
-expand_margin_bottom = 2.0
 anti_aliasing = false
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5y56j"]
@@ -110,10 +108,10 @@ Button/colors/font_hover_color = Color(1, 1, 0.8784314, 1)
 Button/colors/font_pressed_color = Color(1, 1, 0.8784314, 1)
 Button/constants/align_to_largest_stylebox = 1
 Button/font_sizes/font_size = 22
-Button/fonts/font = ExtResource("1_touxu")
+Button/fonts/font = ExtResource("3_mk0s6")
 Button/styles/focus = SubResource("StyleBoxFlat_tbeor")
 Button/styles/hover = SubResource("StyleBoxFlat_2pn01")
-Button/styles/normal = SubResource("StyleBoxFlat_touxu")
+Button/styles/normal = SubResource("StyleBoxFlat_yl303")
 Button/styles/pressed = SubResource("StyleBoxFlat_mk0s6")
 CheckButton/colors/button_checked_color = Color(1, 1, 0.8784314, 1)
 CheckButton/colors/font_color = Color(1, 1, 0.8784314, 1)

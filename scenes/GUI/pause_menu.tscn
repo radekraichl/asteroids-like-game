@@ -1,20 +1,131 @@
-[gd_scene format=3 uid="uid://b0xp21pfkweit"]
+[gd_scene format=3 uid="uid://cajrad5otf2am"]
 
-[node name="PauseMenu" type="CanvasLayer" unique_id=1119899898]
+[ext_resource type="Script" uid="uid://td5o3in76l7v" path="res://scripts/gui/pause_menu/pause_menu.gd" id="1_a81cd"]
+[ext_resource type="Script" uid="uid://dqqw5cpwf1cd1" path="res://scripts/gui/fade_panel.gd" id="2_11l0y"]
+[ext_resource type="Theme" uid="uid://cdqg5vqnwecyx" path="res://resources/ui_theme.tres" id="3_1oj2q"]
+[ext_resource type="Script" uid="uid://om8kwvduykse" path="res://scripts/gui/pause_menu/in_game_settings.gd" id="4_uixhc"]
+[ext_resource type="AudioStream" uid="uid://b7s3wni4s4u5s" path="res://assets/sfx/button_focus.ogg" id="5_1svuw"]
+[ext_resource type="AudioStream" uid="uid://bg2w4eqs2s1x0" path="res://assets/sfx/pause_menu_open_close.ogg" id="6_vvthd"]
 
-[node name="Control" type="Control" parent="." unique_id=1968854068]
+[node name="PauseMenu" type="CanvasLayer" unique_id=1222910]
+layer = 10
+script = ExtResource("1_a81cd")
+
+[node name="FadePanel" type="ColorRect" parent="." unique_id=508466260]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.007843138, 0, 0.03137255, 0.78431374)
+script = ExtResource("2_11l0y")
+
+[node name="MenuRoot" type="Control" parent="." unique_id=810723726]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("3_1oj2q")
 
-[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1583723371]
+[node name="CenterContainer" type="CenterContainer" parent="MenuRoot" unique_id=1970631219]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.25882354, 0, 0, 0.7058824)
+
+[node name="PanelContainer" type="PanelContainer" parent="MenuRoot/CenterContainer" unique_id=872290131]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MenuRoot/CenterContainer/PanelContainer" unique_id=1351507592]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuRoot/CenterContainer/PanelContainer/MarginContainer" unique_id=359481626]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="MenuRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1579071189]
+layout_mode = 2
+theme_type_variation = &"HeaderMedium"
+text = "Paused"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="MenuRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1080307031]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Resume"
+
+[node name="SettingsButton" type="Button" parent="MenuRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1551017978]
+layout_mode = 2
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="MenuRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=11646470]
+layout_mode = 2
+text = "Quit"
+
+[node name="SettingsRoot" type="Control" parent="." unique_id=1394455843]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_1oj2q")
+script = ExtResource("4_uixhc")
+
+[node name="CenterContainer" type="CenterContainer" parent="SettingsRoot" unique_id=242917421]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="SettingsRoot/CenterContainer" unique_id=1647898106]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsRoot/CenterContainer/PanelContainer" unique_id=860271303]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsRoot/CenterContainer/PanelContainer/MarginContainer" unique_id=40298024]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1386497970]
+layout_mode = 2
+theme_type_variation = &"HeaderMedium"
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SFX" type="CheckButton" parent="SettingsRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1378796768]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SFX"
+
+[node name="BackButton" type="Button" parent="SettingsRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1273220056]
+layout_mode = 2
+text = "Back"
+
+[node name="FocusSFX" type="AudioStreamPlayer" parent="." unique_id=915440516]
+stream = ExtResource("5_1svuw")
+volume_db = 4.0
+pitch_scale = 1.4
+bus = &"SFX"
+
+[node name="OpenCloseSFX" type="AudioStreamPlayer" parent="." unique_id=775178528]
+stream = ExtResource("6_vvthd")
+volume_db = -4.0
+bus = &"SFX"
+
+[connection signal="pressed" from="MenuRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="MenuRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MenuRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="SettingsRoot/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BackButton" to="SettingsRoot" method="_on_back_button_pressed"]
